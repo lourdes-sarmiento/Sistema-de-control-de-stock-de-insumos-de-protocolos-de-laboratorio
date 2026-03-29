@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #listas de usuarios y contraseñas para el login
 lista_usuarios = ["carlos" , "javier"]
 lista_contraseñas = ["1" , "2"]
@@ -21,7 +22,9 @@ if login (usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contra
 else:
     print ("usuario o contraseña incorrectos, intente nuevamente")
 
+
 def pedir_opcion(mensaje, minimo, maximo):
+    '''Pide al usuario que ingrese una opcion entre minimo y maximo.'''
     opcion = int(input(mensaje))
     while opcion < minimo or opcion > maximo:
         print(f"Ingrese una opcion entre {minimo} y {maximo}.")
@@ -30,6 +33,7 @@ def pedir_opcion(mensaje, minimo, maximo):
 
 
 def mostrar_insumos_pcr():
+    '''Muestra los insumos necesarios para el protocolo PCR.'''
     insumos = [
         ["PCR", "Primers", 6, "unidades", "<= 2"],
         ["", "dNTPs", 5, "unidades", "<= 2"],
@@ -50,6 +54,7 @@ def mostrar_insumos_pcr():
 
 
 def mostrar_proceso_basico_pcr():
+    '''Muestra el proceso basico del protocolo PCR.'''
     print()
     print("Proceso basico del protocolo PCR:")
     print("1. Preparar la mezcla de reaccion.")
@@ -60,6 +65,7 @@ def mostrar_proceso_basico_pcr():
 
 
 def mostrar_insumos_electroforesis():
+    '''Muestra los insumos necesarios para el protocolo Electroforesis.'''
     insumos = [
         ["Electroforesis", "Gel de agarosa", 6, "frascos", "<= 2"],
         ["", "Buffer de corrida", 8, "frascos", "<= 2"],
@@ -77,6 +83,7 @@ def mostrar_insumos_electroforesis():
 
 
 def mostrar_insumos_extraccion_adn():
+    '''Muestra los insumos necesarios para el protocolo Extraccion de ADN.'''
     insumos = [
         ["Extraccion de ADN", "Buffer de lisis", 7, "frascos", "<= 2"],
         ["", "Enzimas", 6, "frascos", "<= 2"],
@@ -95,6 +102,7 @@ def mostrar_insumos_extraccion_adn():
 
 
 def mostrar_proceso_basico_electroforesis():
+    '''Muestra el proceso basico del protocolo Electroforesis.'''
     print()
     print("Proceso basico del protocolo Electroforesis:")
     print("1. Preparar el gel de agarosa.")
@@ -105,6 +113,7 @@ def mostrar_proceso_basico_electroforesis():
 
 
 def mostrar_proceso_basico_extraccion_adn():
+    '''Muestra el proceso basico del protocolo Extraccion de ADN.'''
     print()
     print("Proceso basico del protocolo Extraccion de ADN:")
     print("1. Colocar la muestra en un tubo.")
@@ -115,6 +124,7 @@ def mostrar_proceso_basico_extraccion_adn():
 
 
 def menu_pcr():
+    '''Muestra el menu del protocolo PCR.'''
     opcion = 0
     while opcion != 3:
         print()
@@ -135,6 +145,7 @@ def menu_pcr():
 
 
 def menu_electroforesis():
+    '''Muestra el menu del protocolo Electroforesis.'''
     opcion = 0
     while opcion != 3:
         print()
@@ -155,6 +166,7 @@ def menu_electroforesis():
 
 
 def menu_extraccion_adn():
+    '''Muestra el menu del protocolo Extraccion de ADN.'''
     opcion = 0
     while opcion != 3:
         print()
@@ -175,6 +187,7 @@ def menu_extraccion_adn():
 
 
 def menu():
+    '''Muestra el menu principal del programa.'''
     dato=0
     while dato != 4:
         print("***********************************************************************************")
