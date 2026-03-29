@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 #listas de usuarios y contraseñas para el login
 lista_usuarios = ["carlos" , "javier"]
 lista_contraseñas = ["1" , "2"]
@@ -22,6 +22,7 @@ if login (usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contra
 else:
     print ("usuario o contraseña incorrectos, intente nuevamente")
 
+#funciones para mostrar los insumos y procesos basicos de cada protocolo, y para pedir opciones al usuario en los menus
 
 def pedir_opcion(mensaje, minimo, maximo):
     '''Pide al usuario que ingrese una opcion entre minimo y maximo.'''
