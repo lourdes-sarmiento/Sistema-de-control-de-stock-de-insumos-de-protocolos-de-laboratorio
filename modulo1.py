@@ -14,25 +14,18 @@ def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contra
 
 
 #programa principal
-usuario_ingresado = input ("ingrese su nombre de usuario: ")
-contraseña_ingresada = input ("ingrese su contraseña: ")
+usuario_ingresado = input ("Ingrese su nombre de usuario: ")
+contraseña_ingresada = input ("Ingrese su contraseña: ")
 if login (usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contraseñas):
     login_exitoso = True
-    print("bienvenido")
+    
 else:
     print ("usuario o contraseña incorrectos, intente nuevamente")
 
 #funciones para mostrar los insumos y procesos basicos de cada protocolo, y para pedir opciones al usuario en los menus
 
 def pedir_opcion(mensaje, minimo, maximo):
-    '''
-    Proposito: Pide al usuario que ingrese una opcion entre minimo y maximo.
-    Parametros: 
-        mensaje: String
-        minimo: int
-        maximo: int
-    Retorna: int
-    '''
+    '''Pide al usuario que ingrese una opcion entre minimo y maximo.'''
     opcion = int(input(mensaje))
     while opcion < minimo or opcion > maximo:
         print(f"Ingrese una opcion entre {minimo} y {maximo}.")
@@ -40,17 +33,76 @@ def pedir_opcion(mensaje, minimo, maximo):
     return opcion
 
 
-def mostrar_insumos_pcr():
-    '''Proposito:Muestra los insumos necesarios para el protocolo PCR.
-    Retorna: Print de los insumos del protocolo PCR.'''
-    insumos = [
-        ["PCR", "Primers", 6, "unidades", "<= 2"],
-        ["", "dNTPs", 5, "unidades", "<= 2"],
-        ["", "ADN Polimerasa", 4, "frascos", "<= 2"],
-        ["", "Cofactor", 5, "unidades", "<= 2"],
-        ["", "Buffer de PCR", 6, "frascos", "<= 2"],
-        ["", "Tubos de PCR", 10, "unidades", "<= 2"]
+INSUMOS_PCR = [
+    ["PCR", "Primers", 6, "unidades", "<= 2"],
+    ["", "dNTPs", 5, "unidades", "<= 2"],
+    ["", "ADN Polimerasa", 4, "frascos", "<= 2"],
+    ["", "Cofactor", 5, "unidades", "<= 2"],
+    ["", "Buffer de PCR", 6, "frascos", "<= 2"],
+    ["", "Tubos de PCR", 10, "unidades", "<= 2"]
+]
+
+INSUMOS_ELECTROFORESIS = [
+    ["Electroforesis", "Gel de agarosa", 6, "frascos", "<= 2"],
+    ["", "Buffer de corrida", 8, "frascos", "<= 2"],
+    ["", "Agente intercalante", 5, "frascos", "<= 2"],
+    ["", "Marcador peso mol.", 5, "unidades", "<= 2"]
+]
+
+INSUMOS_EXTRACCION_ADN = [
+    ["Extraccion de ADN", "Buffer de lisis", 7, "frascos", "<= 2"],
+    ["", "Enzimas", 6, "frascos", "<= 2"],
+    ["", "Agentes de separacion", 4, "frascos", "<= 2"],
+    ["", "Alcoholes", 5, "frascos", "<= 2"],
+    ["", "Buffer de elucion", 6, "frascos", "<= 2"]
+]
+
+
+def alertar_stock_bajo(insumos):
+    '''Genera alertas para los insumos con stock menor o igual a 2 usando lista por comprension.'''
+    return [
+        f"Alerta: {insumo[1]} tiene {insumo[2]} {insumo[3]} disponible(s). Se debe reabastecer."
+        for insumo in insumos if insumo[2] <= 2
     ]
+
+
+def solicitar_uso_insumo(insumos):
+    '''Solicita el insumo a utilizar y la cantidad de stock a descontar.'''
+    print()
+    print("Seleccione el insumo que va a utilizar:")
+    print()
+
+    for i in range(len(insumos)):
+        print(f"{i + 1}. {insumos[i][1]} - Stock disponible: {insumos[i][2]} {insumos[i][3]}")
+        print()
+    opcion_insumo = pedir_opcion("Ingrese el numero del insumo: ", 1, len(insumos))
+    insumo_seleccionado = insumos[opcion_insumo - 1]
+
+    cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado[1]} a utilizar: "))
+    while cantidad < 1 or cantidad > insumo_seleccionado[2]:
+        print("Cantidad invalida. Debe ser mayor a 0 y no superar el stock disponible.")
+        cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado[1]} a utilizar: "))
+
+    stock_disponible = insumo_seleccionado[2]
+    stock_restante = insumo_seleccionado[2] - cantidad
+    insumo_seleccionado[2] = stock_restante
+
+    print()
+    print(f"Insumo seleccionado: {insumo_seleccionado[1]}")
+    print(f"Stock disponible: {stock_disponible} {insumo_seleccionado[3]}")
+    print(f"Cantidad a utilizar: {cantidad} {insumo_seleccionado[3]}")
+    print(f"Stock restante: {stock_restante} {insumo_seleccionado[3]}")
+
+    alertas = alertar_stock_bajo([insumo_seleccionado])
+    if alertas:
+        print()
+        for alerta in alertas:
+            print(alerta)
+
+
+def mostrar_insumos_pcr():
+    '''Muestra los insumos necesarios para el protocolo PCR.'''
+    insumos = INSUMOS_PCR
 
     print()
     print("Insumos del protocolo PCR:")
@@ -60,12 +112,20 @@ def mostrar_insumos_pcr():
     for i in range(len(insumos)):
         print(f"{insumos[i][0]:<11} {insumos[i][1]:<18} {insumos[i][2]:<7} {insumos[i][3]:<11} {insumos[i][4]}")
 
+    alertas = alertar_stock_bajo(insumos)
+    if alertas:
+        print()
+        for alerta in alertas:
+            print(alerta)
+    else:
+        print("\nNo hay insumos con stock menor a 2.")
+
+    return insumos
+
 
 
 def mostrar_proceso_basico_pcr():
-    '''Proposito: Muestra el proceso basico del protocolo PCR.
-    Retorna: Print del proceso basico del protocolo PCR.'''
-    
+    '''Muestra el proceso basico del protocolo PCR.'''
     print()
     print("Proceso basico del protocolo PCR:")
     print("1. Preparar la mezcla de reaccion.")
@@ -76,15 +136,8 @@ def mostrar_proceso_basico_pcr():
 
 
 def mostrar_insumos_electroforesis():
-    '''Proposito: Muestra los insumos necesarios para el protocolo Electroforesis.
-    Retorna: Print de los insumos del protocolo Electroforesis.'''
-    
-    insumos = [
-        ["Electroforesis", "Gel de agarosa", 6, "frascos", "<= 2"],
-        ["", "Buffer de corrida", 8, "frascos", "<= 2"],
-        ["", "Agente intercalante", 5, "frascos", "<= 2"],
-        ["", "Marcador peso mol.", 5, "unidades", "<= 2"]
-    ]
+    '''Muestra los insumos necesarios para el protocolo Electroforesis.'''
+    insumos = INSUMOS_ELECTROFORESIS
 
     print()
     print("Insumos del protocolo Electroforesis:")
@@ -94,18 +147,20 @@ def mostrar_insumos_electroforesis():
     for i in range(len(insumos)):
         print(f"{insumos[i][0]:<15} {insumos[i][1]:<18} {insumos[i][2]:<7} {insumos[i][3]:<11} {insumos[i][4]}")
 
+    alertas = alertar_stock_bajo(insumos)
+    if alertas:
+        print()
+        for alerta in alertas:
+            print(alerta)
+    else:
+        print("\nNo hay insumos con stock menor a 2.")
+
+    return insumos
+
 
 def mostrar_insumos_extraccion_adn():
-    '''Proposito: Muestra los insumos necesarios para el protocolo Extraccion de ADN.
-    Retorna: Print de los insumos del protocolo Extraccion de ADN.'''
-    
-    insumos = [
-        ["Extraccion de ADN", "Buffer de lisis", 7, "frascos", "<= 2"],
-        ["", "Enzimas", 6, "frascos", "<= 2"],
-        ["", "Agentes de separacion", 4, "frascos", "<= 2"],
-        ["", "Alcoholes", 5, "frascos", "<= 2"],
-        ["", "Buffer de elucion", 6, "frascos", "<= 2"]
-    ]
+    '''Muestra los insumos necesarios para el protocolo Extraccion de ADN.'''
+    insumos = INSUMOS_EXTRACCION_ADN
 
     print()
     print("Insumos del protocolo Extraccion de ADN:")
@@ -115,11 +170,19 @@ def mostrar_insumos_extraccion_adn():
     for i in range(len(insumos)):
         print(f"{insumos[i][0]:<20} {insumos[i][1]:<23} {insumos[i][2]:<7} {insumos[i][3]:<11} {insumos[i][4]}")
 
+    alertas = alertar_stock_bajo(insumos)
+    if alertas:
+        print()
+        for alerta in alertas:
+            print(alerta)
+    else:
+        print("\nNo hay insumos con stock menor a 2.")
+
+    return insumos
+
 
 def mostrar_proceso_basico_electroforesis():
-    '''Proposito: Muestra el proceso basico del protocolo Electroforesis.
-    Retorna: Print del proceso basico del protocolo Electroforesis.'''
-   
+    '''Muestra el proceso basico del protocolo Electroforesis.'''
     print()
     print("Proceso basico del protocolo Electroforesis:")
     print("1. Preparar el gel de agarosa.")
@@ -130,8 +193,7 @@ def mostrar_proceso_basico_electroforesis():
 
 
 def mostrar_proceso_basico_extraccion_adn():
-    '''Proposito: Muestra el proceso basico del protocolo Extraccion de ADN.
-    Retorna: Print del proceso basico del protocolo Extraccion de ADN.'''
+    '''Muestra el proceso basico del protocolo Extraccion de ADN.'''
     print()
     print("Proceso basico del protocolo Extraccion de ADN:")
     print("1. Colocar la muestra en un tubo.")
@@ -142,21 +204,21 @@ def mostrar_proceso_basico_extraccion_adn():
 
 
 def menu_pcr():
-    '''Proposito: Muestra el menu del protocolo PCR.
-    Retorna: Print de el menu pcr.'''
+    '''Muestra el menu del protocolo PCR.'''
     opcion = 0
     while opcion != 3:
         print()
         print("Menu del Protocolo PCR")
         print("------------------------")
-        print("1. Ver insumos y cantidades")
+        print("1. Ver insumos y cantidades")#seleccione el insumo luego seleccione la cantidad a utilizar.
         print("2. Ver proceso basico")
         print("3. Volver al menu principal")
 
         opcion = pedir_opcion("Seleccione una opcion: ", 1, 3)
 
         if opcion == 1:
-            mostrar_insumos_pcr()
+            insumos = mostrar_insumos_pcr()
+            solicitar_uso_insumo(insumos)
         elif opcion == 2:
             mostrar_proceso_basico_pcr()
         elif opcion == 3:
@@ -164,8 +226,7 @@ def menu_pcr():
 
 
 def menu_electroforesis():
-    '''Proposito: Muestra el menu del protocolo Electroforesis.
-    Retorna: Print del menu del protocolo Electroforesis.'''
+    '''Muestra el menu del protocolo Electroforesis.'''
     opcion = 0
     while opcion != 3:
         print()
@@ -178,7 +239,8 @@ def menu_electroforesis():
         opcion = pedir_opcion("Seleccione una opcion: ", 1, 3)
 
         if opcion == 1:
-            mostrar_insumos_electroforesis()
+            insumos = mostrar_insumos_electroforesis()
+            solicitar_uso_insumo(insumos)
         elif opcion == 2:
             mostrar_proceso_basico_electroforesis()
         elif opcion == 3:
@@ -186,8 +248,7 @@ def menu_electroforesis():
 
 
 def menu_extraccion_adn():
-    '''Proposito: Muestra el menu del protocolo Extraccion de ADN.
-    Retorna: Print del menu del protocolo Extraccion de ADN.'''
+    '''Muestra el menu del protocolo Extraccion de ADN.'''
     opcion = 0
     while opcion != 3:
         print()
@@ -200,7 +261,8 @@ def menu_extraccion_adn():
         opcion = pedir_opcion("Seleccione una opcion: ", 1, 3)
 
         if opcion == 1:
-            mostrar_insumos_extraccion_adn()
+            insumos = mostrar_insumos_extraccion_adn()
+            solicitar_uso_insumo(insumos)
         elif opcion == 2:
             mostrar_proceso_basico_extraccion_adn()
         elif opcion == 3:
@@ -208,8 +270,7 @@ def menu_extraccion_adn():
 
 
 def menu():
-    '''Proposito: Muestra el menu principal del programa.
-    Retorna: Print del menu principal.'''
+    '''Muestra el menu principal del programa.'''
     dato=0
     while dato != 4:
         print("***********************************************************************************")
@@ -235,14 +296,15 @@ def menu():
         elif dato == 4:
             print("Has seleccionado salir del programa")
 
+
 def main():
     acceso = False
     while acceso == False:
-        usuario_ingresado = input ("ingrese su nombre de usuario: ")
-        contraseña_ingresada = input ("ingrese su contraseña: ")
+        usuario_ingresado = input ("Ingrese su nombre de usuario: ")
+        contraseña_ingresada = input ("Ingrese su contraseña: ")
         if login (usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contraseñas):
             acceso = True
-            print("bienvenido")
+        
             menu()
         else:
             print ("usuario o contraseña incorrectos, intente nuevamente")
