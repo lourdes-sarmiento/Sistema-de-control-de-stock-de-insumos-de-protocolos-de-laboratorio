@@ -1,13 +1,5 @@
 import datos
 
-def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contraseñas) :
-    indice = 0
-    while indice <len(lista_usuarios):
-        if lista_usuarios[indice] == usuario_ingresado and lista_contraseñas [indice] == contraseña_ingresada :
-            return True
-        indice = indice + 1
-    return False
-
 #funciones para mostrar los insumos y procesos basicos de cada protocolo, y para pedir opciones al usuario en los menus
 
 def pedir_opcion(mensaje, minimo, maximo):
@@ -304,15 +296,3 @@ def sumar_stock(insumo):
     insumo[2] = cantidadActual + cantidadAgregar
     print("Stock actualizado")
 
-def main():
-    acceso = False
-    while acceso == False:
-        usuario_ingresado = input ("Ingrese su nombre de usuario: ")
-        contraseña_ingresada = input ("Ingrese su contraseña: ")
-        if login (usuario_ingresado, contraseña_ingresada, datos.lista_usuarios, datos.lista_contraseñas):
-            acceso = True
-            menu()
-        else:
-            print ("usuario o contraseña incorrectos, intente nuevamente")
-
-main()
