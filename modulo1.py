@@ -150,6 +150,7 @@ def menu():
 
 
 def mostrar_insumos_pcr():
+    """Muestra los insumos necesarios para el protocolo PCR. """
     insumos = datos.INSUMOS_PCR
 
     print()
