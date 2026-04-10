@@ -150,7 +150,6 @@ def menu():
 
 
 def mostrar_insumos_pcr():
-    '''Muestra los insumos necesarios para el protocolo PCR.'''
     insumos = datos.INSUMOS_PCR
 
     print()
@@ -158,8 +157,7 @@ def mostrar_insumos_pcr():
     print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
-    for i in range(len(insumos)):
-        print(f"{insumos[i][0]:<11} {insumos[i][1]:<18} {insumos[i][2]:<7} {insumos[i][3]:<11} {insumos[i][4]}")
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]:<18} {insumo[2]:<7} {insumo[3]:<11} {insumo[4]}"), insumos))
 
     alertas = alertar_stock_bajo(insumos)
     if alertas:
@@ -170,6 +168,7 @@ def mostrar_insumos_pcr():
         print("\nNo hay insumos con stock menor a 2.")
 
     return insumos
+
 
 
 
@@ -192,9 +191,8 @@ def mostrar_insumos_electroforesis():
     print("Insumos del protocolo Electroforesis:")
     print("Protocolo   |   Insumo      |      Stock  | Unidad      |   Alerta en")
     print("----------------------------------------------------------------")
-
-    for i in range(len(insumos)):
-        print(f"{insumos[i][0]:<15} {insumos[i][1]:<18} {insumos[i][2]:<7} {insumos[i][3]:<11} {insumos[i][4]}")
+    
+    list(map(lambda insumo: print(f"{insumo[0]:<15} {insumo[1]:<18} {insumo[2]:<7} {insumo[3]:<11} {insumo[4]}"), insumos))
 
     alertas = alertar_stock_bajo(insumos)
     if alertas:
@@ -216,9 +214,8 @@ def mostrar_insumos_extraccion_adn():
     print("Protocolo      |    Insumo         |       Stock  | Unidad      |   Alerta en")
     print("-------------------------------------------------------------------------")
 
-    for i in range(len(insumos)):
-        print(f"{insumos[i][0]:<20} {insumos[i][1]:<23} {insumos[i][2]:<7} {insumos[i][3]:<11} {insumos[i][4]}")
-
+    list(map(lambda insumo: print(f"{insumo[0]:<15} {insumo[1]:<18} {insumo[2]:<7} {insumo[3]:<11} {insumo[4]}"), insumos))
+    
     alertas = alertar_stock_bajo(insumos)
     if alertas:
         print()
