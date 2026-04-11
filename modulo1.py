@@ -127,9 +127,9 @@ def menu():
         print("1. Protocolo PCR")
         print("2. Protocolo Electroforesis")
         print("3. Protocolo Extraccion de ADN")
-        print("4. Agregar stock")
-        print("5. Agregar stock a un grupo completo")
-        print("6. Mostrar datos de todos los insumos")
+        print("4. Agregar stock por protocolo")
+        print("5. Agregar stock a todos los protocolos")
+        print("6. Mostrar datos de todos los insumos de los protocolos")
         print("7. Salir del sistema")
         print()
 
@@ -197,10 +197,11 @@ def mostrar_insumos_electroforesis():
 
     print()
     print("Insumos del protocolo Electroforesis:")
-    print("Protocolo   |   Insumo      |      Stock  | Unidad      |   Alerta en")
-    print("----------------------------------------------------------------")
-    
-    list(map(lambda insumo: print(f"{insumo[0]:<15} {insumo[1]:<18} {insumo[2]:<7} {insumo[3]:<11} {insumo[4]}"), insumos))
+    print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
+    print("--------------------------------------------------------------")
+
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]:<18} {insumo[2]:<7} {insumo[3]:<11} {insumo[4]}"), insumos))
+
 
     alertas = alertar_stock_bajo(insumos)
     if alertas:
@@ -219,11 +220,11 @@ def mostrar_insumos_extraccion_adn():
 
     print()
     print("Insumos del protocolo Extraccion de ADN:")
-    print("Protocolo      |    Insumo         |       Stock  | Unidad      |   Alerta en")
-    print("-------------------------------------------------------------------------")
+    print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
+    print("--------------------------------------------------------------")
 
-    list(map(lambda insumo: print(f"{insumo[0]:<15} {insumo[1]:<18} {insumo[2]:<7} {insumo[3]:<11} {insumo[4]}"), insumos))
-    
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]:<18} {insumo[2]:<7} {insumo[3]:<11} {insumo[4]}"), insumos))
+
     alertas = alertar_stock_bajo(insumos)
     if alertas:
         print()
