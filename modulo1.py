@@ -322,7 +322,7 @@ def agregar_stock_a_grupo():
     print("2. Electroforesis")
     print("3. Extraccion de ADN")
 
-    opcion = pedir_opcion("Seleccione un grupo de insumos",1,3) # Se le pide el grupo de insumos al usuario
+    opcion = pedir_opcion("Seleccione un grupo de insumos: ",1,3) # Se le pide el grupo de insumos al usuario
     
     if opcion == 1:
         insumos = datos.INSUMOS_PCR
