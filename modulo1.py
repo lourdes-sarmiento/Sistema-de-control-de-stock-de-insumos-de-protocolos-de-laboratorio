@@ -11,10 +11,11 @@ def pedir_opcion(mensaje, minimo, maximo):
     return opcion
 
 def alertar_stock_bajo(insumos):
-    '''Genera alertas para los insumos con stock menor o igual a 2 usando lista por comprension.'''
+    '''Genera alertas para los insumos con stock menor o igual a 2 usando lista por comprension,funcion lambda y filter .'''
+    insumos_stock_bajo=list(filter(lambda insumo: insumo[2] <= 2, insumos))
     return [
         f"Alerta: {insumo[1]} tiene {insumo[2]} {insumo[3]} disponible(s). Se debe reabastecer."
-        for insumo in insumos if insumo[2] <= 2
+        for insumo in insumos_stock_bajo
     ]
 
 
