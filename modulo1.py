@@ -121,7 +121,7 @@ def menu_extraccion_adn():
 def menu():
     '''Muestra el menu principal del programa.'''
     dato=0
-    while dato != 7:
+    while dato != 8:
         print("***********************************************************************************")
         print("Bienvenido al programa de control de insumos y protocolos de Laboratorios Umbrella")
         print("***********************************************************************************")
@@ -131,10 +131,11 @@ def menu():
         print("4. Agregar stock por protocolo")
         print("5. Agregar stock a todos los protocolos")
         print("6. Mostrar datos de todos los insumos de los protocolos")
-        print("7. Salir del sistema")
+        print("7. Consultar datos del personal del laboratorio")
+        print("8. Salir del sistema")
         print()
 
-        dato = pedir_opcion("Ingrese opcion de protocolo a realizar: ", 1, 7)
+        dato = pedir_opcion("Ingrese opcion de protocolo a realizar: ", 1, 8)
 
         if dato == 1:
             print("Has seleccionado el protocolo PCR")
@@ -155,6 +156,10 @@ def menu():
             print("Has seleccionado ver todo el stock")
             mostrar_datos()
         elif dato == 7:
+            print("Has seleccionado consultar datos del personal del laboratorio")
+            import datos_personal
+            datos_personal.consultar_dato()
+        elif dato == 8:
             print("Has seleccionado salir del sistema")
 
 def mostrar_insumos_pcr():
