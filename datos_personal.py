@@ -18,7 +18,7 @@ def consultar_dato():
 
         if opcion_persona == 3:
             print("Saliendo del programa...")
-            break
+            return
 
         print("\nSeleccione el dato que desea conocer:")
         print("1. Telefono")

@@ -5,7 +5,7 @@ import re
 
 def menu_entrada():
     while True:
-        print("MENU PRINCIPAL: ")
+        print("BIENVENIDO AL MENU PRINCIPAL: ")
         print("1. Iniciar sesión")
         print("2. Crear cuenta")
         print("3. Salir")
@@ -35,7 +35,7 @@ def crear_cuenta():
             datos.lista_usuarios.append(usuario)
             datos.lista_contraseñas.append(contraseña)
             print("Cuenta creada con éxito")
-            break
+            return
         else:
             print("Error: la contraseña debe terminar con al menos 2 números")
 
