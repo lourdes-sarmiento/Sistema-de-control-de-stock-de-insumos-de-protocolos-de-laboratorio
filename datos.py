@@ -1,6 +1,6 @@
 #Aquí reciden los datos de los usuarios y los insumos para cada proceso, con sus cantidades y unidades correspondientes.
 #Usuarios y contraseñas para el login
-#bonjour desde el github de valen
+
 lista_usuarios = ["carlos" , "javier"] 
 lista_contraseñas = ["1" , "2"]
 

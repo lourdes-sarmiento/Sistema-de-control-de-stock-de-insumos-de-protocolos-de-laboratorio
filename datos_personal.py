@@ -1,6 +1,4 @@
 # datos de los trabajadores del laboratorio 
-#usar findall
-#mdoficar contraseña con ultimas funciones r"^\d{}
 
 import re
 from modulo1 import pedir_opcion
