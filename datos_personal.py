@@ -3,8 +3,8 @@
 import re
 from modulo1 import pedir_opcion
 
-texto1 = "Carlos Perez, telefono 1234-5678, direccion calle libertad 123, correo carlos.perez@email.com"
-texto2 = "Javier Gomez, telefono 9876-5432, direccion calle libertad 456, correo javier.gomez@email.com"
+texto1 = "Carlos Perez, telefono 1234-5678, direccion calle libertad 123, correo carlos.perez@email.com, obra social OSDE"
+texto2 = "Javier Gomez, telefono 9876-5432, direccion calle libertad 456, correo javier.gomez@email.com, obra social Swiss Medical"
 
 def consultar_dato():
     
@@ -25,7 +25,8 @@ def consultar_dato():
         print("1. Telefono")
         print("2. Direccion")
         print("3. Correo")
-        opcion_dato = pedir_opcion("Seleccione numero: ", 1, 3)
+        print("4. Obra social")
+        opcion_dato = pedir_opcion("Seleccione numero: ", 1, 4)
 
         if opcion_persona == 1:
             persona = "Carlos"
@@ -40,9 +41,12 @@ def consultar_dato():
         elif opcion_dato == 2:
             dato = "direccion"
             resultado = re.findall(r"direccion (.*?), correo", texto)
-        else:
+        elif opcion_dato == 3:
             dato = "correo"
             resultado = re.findall(r"[\w\.-]+@[\w\.-]+", texto)
+        else:
+            dato = "obra social"
+            resultado = re.findall(r"obra social (.*?)$", texto)
 
         if resultado:
             print(f"El {dato} de {persona} es: {resultado[0]}")

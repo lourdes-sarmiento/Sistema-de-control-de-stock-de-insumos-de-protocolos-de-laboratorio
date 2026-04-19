@@ -52,7 +52,7 @@ def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contra
     
     indice = 0
     while indice <len(lista_usuarios):
-        if lista_usuarios[indice] == usuario_ingresado and lista_contraseñas [indice] == contraseña_ingresada :
+        if re.search(f"^{usuario_ingresado}$", lista_usuarios[indice], re.IGNORECASE) and lista_contraseñas[indice] == contraseña_ingresada:
             return True
         indice = indice + 1
     return False
