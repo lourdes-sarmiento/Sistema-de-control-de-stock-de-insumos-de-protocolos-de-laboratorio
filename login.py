@@ -4,6 +4,9 @@ from modulo1 import menu
 import re
 
 def menu_entrada():
+    
+    """ Esta función sirve para mostrar el menú de entrada para iniciar sesión o crear una cuenta"""
+    
     while True:
         print("BIENVENIDO AL MENU PRINCIPAL: ")
         print("1. Iniciar sesión")
@@ -26,6 +29,9 @@ def menu_entrada():
             print("Opción inválida")
 
 def crear_cuenta():
+    
+    """ Esta función sirve para crear una nueva cuenta de usuario"""
+    
     usuario = input("Ingrese un usuario: ")
 
     while True:
@@ -41,6 +47,9 @@ def crear_cuenta():
 
 
 def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contraseñas) :
+    
+    """ Esta función sirve para verificar si el usuario y la contraseña ingresados son correctos"""
+    
     indice = 0
     while indice <len(lista_usuarios):
         if lista_usuarios[indice] == usuario_ingresado and lista_contraseñas [indice] == contraseña_ingresada :
@@ -49,6 +58,9 @@ def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contra
     return False
 
 def ingresar():
+    
+    """ Esta función sirve para manejar el proceso de inicio de sesión, verificando el usuario y la contraseña, y limitando los intentos de acceso"""
+    
     conteo_errores = 0
     acceso = False
     while acceso == False:

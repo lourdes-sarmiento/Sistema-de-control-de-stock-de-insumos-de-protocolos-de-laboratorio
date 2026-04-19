@@ -9,6 +9,9 @@ texto1 = "Carlos Perez, telefono 1234-5678, direccion calle libertad 123, correo
 texto2 = "Javier Gomez, telefono 9876-5432, direccion calle libertad 456, correo javier.gomez@email.com"
 
 def consultar_dato():
+    
+    """ Esta función sirve para consultar los datos de los trabajadores del laboratorio, permitiendo al usuario seleccionar el trabajador y el dato que desea conocer"""
+    
     while True:
         print("\nSeleccione personal de laboratorio:")
         print("1. Carlos")
