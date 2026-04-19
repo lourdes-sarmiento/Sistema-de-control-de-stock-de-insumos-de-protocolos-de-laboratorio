@@ -23,7 +23,7 @@ def menu_entrada():
 
         elif opcion == "3":
             print("Saliendo del sistema...")
-            break
+            return
 
         else:
             print("Opción inválida")
