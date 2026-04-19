@@ -48,8 +48,9 @@ def crear_cuenta():
 
 def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contraseñas) :
     
-    """ Esta función sirve para verificar si el usuario y la contraseña ingresados son correctos"""
-    
+    """ Esta función sirve para verificar si el usuario y la contraseña ingresados son correctos se utliza"""
+    """ Se utliza una búsqueda con expresiones regulares para comparar el usuario ingresado con la lista de usuarios, y se verifica que la contraseña coincida con la contraseña correspondiente al usuario encontrado"""
+    """ Se utiliza tercer parametro re.IGNORECASE para hacer la búsqueda de usuarios sin importar mayúsculas o minúsculas, y se limita el número de intentos de acceso a 3 para evitar intentos de acceso no autorizados"""
     indice = 0
     while indice <len(lista_usuarios):
         if re.search(f"^{usuario_ingresado}$", lista_usuarios[indice], re.IGNORECASE) and lista_contraseñas[indice] == contraseña_ingresada:
