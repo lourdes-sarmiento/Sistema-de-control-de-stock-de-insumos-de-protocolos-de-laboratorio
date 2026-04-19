@@ -1,6 +1,6 @@
 import login
 #Aquí se ejecuta el programa
 def main():
-    login.ingresar()
+    login.main()
     
 main()
