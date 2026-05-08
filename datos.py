@@ -1,30 +1,100 @@
 #Aquí reciden los datos de los usuarios y los insumos para cada proceso, con sus cantidades y unidades correspondientes.
 #Usuarios y contraseñas para el login
 
-lista_usuarios = ["carlos" , "javier"] 
-lista_contraseñas = ["1" , "2"]
+usuarios = {  #La clave es el nombre del usuario (clave primaria) y el valor es su contraseña, la cual puede repetirse. 
+    "carlos": "1",
+    "javier": "2"
+}
 
-#Insumos numerados 
-INSUMOS_PCR = [
-    ["1", "Primers", 6, "unidades", "<= 2"],
-    ["2", "dNTPs", 5, "unidades", "<= 2"],
-    ["3", "ADN Polimerasa", 1, "frascos", "<= 2"],
-    ["4", "Cofactor", 5, "unidades", "<= 2"],
-    ["5", "Buffer de PCR", 6, "frascos", "<= 2"],
-    ["6", "Tubos de PCR", 10, "unidades", "<= 2"]
-]
+lista_usuarios = list(usuarios.keys())
+lista_contraseñas = list(usuarios.values())
 
-INSUMOS_ELECTROFORESIS = [
-    ["1", "Gel de agarosa", 6, "frascos", "<= 2"],
-    ["2", "Buffer de corrida", 8, "frascos", "<= 2"],
-    ["3", "Agente intercalante", 1, "frascos", "<= 2"],
-    ["4", "Marcador peso mol.", 1, "unidades", "<= 2"]
-]
+#Los insumos ahora se dividen en diccionarios tales que:
+#Su clave es el numero de id del grupo de insumos y su valor es un diccionario el cual tiene las caracteristicas de ese insumo.
 
-INSUMOS_EXTRACCION_ADN = [
-    ["1", "Buffer de lisis", 7, "frascos", "<= 2"],
-    ["2", "Enzimas", 6, "frascos", "<= 2"],
-    ["3", "Agentes de separacion", 4, "frascos", "<= 2"],
-    ["4", "Alcoholes", 5, "frascos", "<= 2"],
-    ["5", "Buffer de elucion", 1, "frascos", "<= 2"]
-]
+pcr = { 
+    "1": {
+        "nombre":"Primers",
+        "cantidad": 6,
+        "unidad": "unidades",
+        "minimo": 1},
+    "2": {
+        "nombre":"dNTPs",
+        "cantidad":5,
+        "unidad" : "unidades",
+        "minimo" : 2},
+    "3": {
+        "nombre" : "ADN Polimerasa",
+        "cantidad" : 1,
+        "unidad" : "frascos",
+        "minimo" : 2},
+    "4": {
+        "nombre" : "Cofactor",
+        "cantidad" : 5,
+        "unidad" : "unidades",
+        "minimo" : 2},
+    "5": {
+        "nombre" : "Buffer de PCR",
+        "cantidad" : 6,
+        "unidad" : "frascos",
+        "minimo" : 2},
+    "6": {
+        "nombre" : "Tubos de PCR",
+        "cantidad" : 10,
+        "unidad" : "unidades",
+        "minimo" : 2}
+    }
+
+
+electrofosis = {
+    "1": {
+        "nombre":"Gel de agarosa",
+        "cantidad": 6,
+        "unidad": "frascos",
+        "minimo": 2},
+    "2": {
+        "nombre":"Buffer de corrida",
+        "cantidad": 8,
+        "unidad": "frascos",
+        "minimo": 2},
+    "3": {
+        "nombre":"Agente intercalante",
+        "cantidad": 1,
+        "unidad":"frascos",
+        "minimo": 2},
+    "4": {
+        "nombre":"Marcador peso mol.",
+        "cantidad": 1,
+        "unidad":"unidades",
+        "minimo": 2}
+    }
+
+
+
+extraccion_adn = {
+    "1": {
+        "nombre":"Buffer de lisis",
+        "cantidad": 7,
+        "unidad": "frascos",
+        "minimo": 2},
+    "2": {
+        "nombre":"Enzimas",
+        "cantidad": 6,
+        "unidad": "frascos",
+        "minimo": 2},
+    "3": {
+        "nombre":"Agentes de separacion",
+        "cantidad": 4,
+        "unidad":"frascos",
+        "minimo": 2},
+    "4": {
+        "nombre":"Alcoholes",
+        "cantidad": 5,
+        "unidad":"frascos",
+        "minimo": 2},
+    "5": {
+        "nombre":"Buffer de elucion",
+        "cantidad": 1,
+        "unidad":"frascos",
+        "minimo": 2}
+    }
