@@ -17,32 +17,32 @@ pcr = {
         "nombre":"Primers",
         "cantidad": 6,
         "unidad": "unidades",
-        "minimo": 1},
+        "stock_minimo": 1},
     "2": {
         "nombre":"dNTPs",
         "cantidad":5,
         "unidad" : "unidades",
-        "minimo" : 2},
+        "stock_minimo" : 2},
     "3": {
         "nombre" : "ADN Polimerasa",
         "cantidad" : 1,
         "unidad" : "frascos",
-        "minimo" : 2},
+        "stock_minimo" : 2},
     "4": {
         "nombre" : "Cofactor",
         "cantidad" : 5,
         "unidad" : "unidades",
-        "minimo" : 2},
+        "stock_minimo" : 2},
     "5": {
         "nombre" : "Buffer de PCR",
         "cantidad" : 6,
         "unidad" : "frascos",
-        "minimo" : 2},
+        "stock_minimo" : 2},
     "6": {
         "nombre" : "Tubos de PCR",
         "cantidad" : 10,
         "unidad" : "unidades",
-        "minimo" : 2}
+        "stock_minimo" : 2}
     }
 
 
@@ -51,22 +51,22 @@ electrofosis = {
         "nombre":"Gel de agarosa",
         "cantidad": 6,
         "unidad": "frascos",
-        "minimo": 2},
+        "stock_minimo": 2},
     "2": {
         "nombre":"Buffer de corrida",
         "cantidad": 8,
         "unidad": "frascos",
-        "minimo": 2},
+        "stock_minimo": 2},
     "3": {
         "nombre":"Agente intercalante",
         "cantidad": 1,
         "unidad":"frascos",
-        "minimo": 2},
+        "stock_minimo": 2},
     "4": {
         "nombre":"Marcador peso mol.",
         "cantidad": 1,
         "unidad":"unidades",
-        "minimo": 2}
+        "stock_minimo": 2}
     }
 
 
@@ -76,25 +76,25 @@ extraccion_adn = {
         "nombre":"Buffer de lisis",
         "cantidad": 7,
         "unidad": "frascos",
-        "minimo": 2},
+        "stock_minimo": 2},
     "2": {
         "nombre":"Enzimas",
         "cantidad": 6,
         "unidad": "frascos",
-        "minimo": 2},
+        "stock_minimo": 2},
     "3": {
         "nombre":"Agentes de separacion",
         "cantidad": 4,
         "unidad":"frascos",
-        "minimo": 2},
+        "stock_minimo": 2},
     "4": {
         "nombre":"Alcoholes",
         "cantidad": 5,
         "unidad":"frascos",
-        "minimo": 2},
+        "stock_minimo": 2},
     "5": {
         "nombre":"Buffer de elucion",
         "cantidad": 1,
         "unidad":"frascos",
-        "minimo": 2}
+        "stock_minimo": 2}
     }

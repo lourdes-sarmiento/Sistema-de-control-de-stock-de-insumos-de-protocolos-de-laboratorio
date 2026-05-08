@@ -10,11 +10,15 @@ def pedir_opcion(mensaje, minimo, maximo):
         opcion = int(input(mensaje))
     return opcion
 
+def obtener_insumos(insumos):
+    '''Devuelve los insumos para recorrerlos, aunque esten guardados en un diccionario.'''
+    return insumos.values()
+
 def alertar_stock_bajo(insumos):
     '''Genera alertas para los insumos con stock menor o igual a 2 usando lista por comprension,funcion lambda y filter .'''
-    insumos_stock_bajo=list(filter(lambda insumo: insumo[2] <= 2, insumos))
+    insumos_stock_bajo=list(filter(lambda insumo: insumo["cantidad"] <= 2, obtener_insumos(insumos)))
     return [
-        f"Alerta: {insumo[1]} tiene {insumo[2]} {insumo[3]} disponible(s). Se debe reabastecer."
+        f"Alerta: {insumo['nombre']} tiene {insumo['cantidad']} {insumo['unidad']} disponible(s). Se debe reabastecer."
         for insumo in insumos_stock_bajo
     ]
 
@@ -171,7 +175,7 @@ def mostrar_insumos_pcr():
     print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
-    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]:<18} {insumo[2]:<7} {insumo[3]:<11} {insumo[4]}"), insumos))
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]['nombre']:<18} {insumo[1]['cantidad']:<7} {insumo[1]['unidad']:<11} {insumo[1]['stock_minimo']}"), insumos))
 
     alertas = alertar_stock_bajo(insumos)
     if alertas:
@@ -206,7 +210,7 @@ def mostrar_insumos_electroforesis():
     print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
-    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]:<18} {insumo[2]:<7} {insumo[3]:<11} {insumo[4]}"), insumos))
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]['nombre']:<18} {insumo[1]['cantidad']:<7} {insumo[1]['unidad']:<11} {insumo[1]['stock_minimo']}"), insumos))
 
 
     alertas = alertar_stock_bajo(insumos)
@@ -229,7 +233,7 @@ def mostrar_insumos_extraccion_adn():
     print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
-    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]:<18} {insumo[2]:<7} {insumo[3]:<11} {insumo[4]}"), insumos))
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]['nombre']:<18} {insumo[1]['cantidad']:<7} {insumo[1]['unidad']:<11} {insumo[1]['stock_minimo']}"), insumos))
 
     alertas = alertar_stock_bajo(insumos)
     if alertas:
@@ -317,7 +321,7 @@ def sumar_stock(insumo,stock_a_agregar):
     Parametros: insumo (lista): La lista del insumo al que se le va a agregar stock. stock_a_agregar: Int
     Retorna: No retorna nada, pero actualiza la cantidad del insumo seleccionado.
     """
-    insumo[2] += stock_a_agregar
+    insumo["cantidad"] += stock_a_agregar
 
 def agregar_stock_a_grupo():
     """
