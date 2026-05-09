@@ -12,7 +12,7 @@ lista_contraseñas = list(usuarios.values())
 #Los insumos ahora se dividen en diccionarios tales que:
 #Su clave es el numero de id del grupo de insumos y su valor es un diccionario el cual tiene las caracteristicas de ese insumo.
 
-pcr = { 
+INSUMOS_PCR = { 
     "1": {
         "nombre":"Primers",
         "cantidad": 6,
@@ -46,7 +46,7 @@ pcr = {
     }
 
 
-electrofosis = {
+INSUMOS_ELECTROFORESIS = {
     "1": {
         "nombre":"Gel de agarosa",
         "cantidad": 6,
@@ -71,7 +71,7 @@ electrofosis = {
 
 
 
-extraccion_adn = {
+INSUMOS_EXTRACCION_ADN = {
     "1": {
         "nombre":"Buffer de lisis",
         "cantidad": 7,

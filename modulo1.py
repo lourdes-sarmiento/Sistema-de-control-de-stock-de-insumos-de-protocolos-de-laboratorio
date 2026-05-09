@@ -15,10 +15,10 @@ def obtener_insumos(insumos):
     return insumos.values()
 
 def alertar_stock_bajo(insumos):
-    '''Genera alertas para los insumos con stock menor o igual a 2 usando lista por comprension,funcion lambda y filter .'''
-    insumos_stock_bajo=list(filter(lambda insumo: insumo["cantidad"] <= 2, obtener_insumos(insumos)))
+    '''Genera alertas para los insumos con stock menor o igual a su nivel minimo usando lista por comprension,funcion lambda y filter .'''
+    insumos_stock_bajo=list(filter(lambda insumo: insumo["cantidad"] <= insumo["stock_minimo"], obtener_insumos(insumos)))
     return [
-        f"Alerta: {insumo['nombre']} tiene {insumo['cantidad']} {insumo['unidad']} disponible(s). Se debe reabastecer."
+        f"Alerta: {insumo["nombre"]} tiene {insumo["cantidad"]} {insumo["unidad"]} disponible(s). Se debe reabastecer."
         for insumo in insumos_stock_bajo
     ]
 
@@ -29,32 +29,29 @@ def solicitar_uso_insumo(insumos):
     print("Seleccione el insumo que va a utilizar:")
     print()
 
-    for i in range(len(insumos)):
-        print(f"{i + 1}. {insumos[i][1]} - Stock disponible: {insumos[i][2]} {insumos[i][3]}")
+    for id_insumo, datos_insumo in insumos.items():
+        print(f"{id_insumo}. {datos_insumo["nombre"]} - Stock disponible: {datos_insumo["cantidad"]} {datos_insumo["unidad"]}")
         print()
+        
     opcion_insumo = pedir_opcion("Ingrese el numero del insumo: ", 1, len(insumos))
-    insumo_seleccionado = insumos[opcion_insumo - 1]
+    insumo_seleccionado = insumos[str(opcion_insumo)]
 
-    cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado[1]} a utilizar: "))
-    while cantidad < 1 or cantidad > insumo_seleccionado[2]:
+    cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado["nombre"]} a utilizar: "))
+    while cantidad < 1 or cantidad > insumo_seleccionado["cantidad"]:
         print("Cantidad invalida. Debe ser mayor a 0 y no superar el stock disponible.")
-        cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado[1]} a utilizar: "))
+        cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado["nombre"]} a utilizar: "))
 
-    stock_disponible = insumo_seleccionado[2]
-    stock_restante = insumo_seleccionado[2] - cantidad
-    insumo_seleccionado[2] = stock_restante
+    stock_disponible = insumo_seleccionado["cantidad"]
+    stock_restante = insumo_seleccionado["cantidad"] - cantidad
+    insumo_seleccionado["cantidad"] = stock_restante
 
     print()
-    print(f"Insumo seleccionado: {insumo_seleccionado[1]}")
-    print(f"Stock disponible: {stock_disponible} {insumo_seleccionado[3]}")
-    print(f"Cantidad a utilizar: {cantidad} {insumo_seleccionado[3]}")
-    print(f"Stock restante: {stock_restante} {insumo_seleccionado[3]}")
+    print(f"Insumo seleccionado: {insumo_seleccionado["nombre"]}")
+    print(f"Stock disponible: {stock_disponible} {insumo_seleccionado["unidad"]}")
+    print(f"Cantidad a utilizar: {cantidad} {insumo_seleccionado["unidad"]}")
+    print(f"Stock restante: {stock_restante} {insumo_seleccionado["unidad"]}")
 
-    alertas = alertar_stock_bajo([insumo_seleccionado])
-    if alertas:
-        print()
-        for alerta in alertas:
-            print(alerta)
+    alertar_stock_bajo(insumos)
 
 def menu_pcr():
     '''Muestra el menu del protocolo PCR.'''
@@ -175,7 +172,7 @@ def mostrar_insumos_pcr():
     print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
-    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]['nombre']:<18} {insumo[1]['cantidad']:<7} {insumo[1]['unidad']:<11} {insumo[1]['stock_minimo']}"), insumos))
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]["nombre"]:<18} {insumo[1]["cantidad"]:<7} {insumo[1]["unidad"]:<11} {insumo[1]["stock_minimo"]}"), insumos.items()))
 
     alertas = alertar_stock_bajo(insumos)
     if alertas:
@@ -210,7 +207,7 @@ def mostrar_insumos_electroforesis():
     print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
-    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]['nombre']:<18} {insumo[1]['cantidad']:<7} {insumo[1]['unidad']:<11} {insumo[1]['stock_minimo']}"), insumos))
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]["nombre"]:<18} {insumo[1]["cantidad"]:<7} {insumo[1]["unidad"]:<11} {insumo[1]["stock_minimo"]}"), insumos.items()))
 
 
     alertas = alertar_stock_bajo(insumos)
@@ -233,7 +230,7 @@ def mostrar_insumos_extraccion_adn():
     print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
-    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]['nombre']:<18} {insumo[1]['cantidad']:<7} {insumo[1]['unidad']:<11} {insumo[1]['stock_minimo']}"), insumos))
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]["nombre"]:<18} {insumo[1]["cantidad"]:<7} {insumo[1]["unidad"]:<11} {insumo[1]["stock_minimo"]}"), insumos.items()))
 
     alertas = alertar_stock_bajo(insumos)
     if alertas:
@@ -300,13 +297,13 @@ def agregar_stock():
         mostrar_insumos_extraccion_adn()
     
     pedirInsumoEspecifico = pedir_opcion("Seleccione el insumo al que desea agregar stock: ", 1, len(insumos)) #Luego se le pide que elija el insumo especifico de ese grupo de insumos
-    insumoSeleccionado = insumos[pedirInsumoEspecifico - 1]
+    insumoSeleccionado = insumos[str(pedirInsumoEspecifico)]
 
-    cantidadAgregar = int(input(f"Ingrese la cantidad de {insumoSeleccionado[1]} a agregar, 0 para cancelar: "))
+    cantidadAgregar = int(input(f"Ingrese la cantidad de {insumoSeleccionado["nombre"]} a agregar, 0 para cancelar: "))
 
     while cantidadAgregar < 0:
         print("Cantidad invalida. Debe ser un numero positivo.")
-        cantidadAgregar = int(input(f"Ingrese la cantidad de {insumoSeleccionado[1]} a agregar, 0 para cancelar: "))
+        cantidadAgregar = int(input(f"Ingrese la cantidad de {insumoSeleccionado["nombre"]} a agregar, 0 para cancelar: "))
     if cantidadAgregar == 0:
         print("No se ha agregado stock.")
         return
@@ -350,7 +347,7 @@ def agregar_stock_a_grupo():
         agregar = int(input("Ingrese el numero de stock a sumar al grupo: "))
         print("Cantidad invalida")
 
-    list(map(lambda insumo: sumar_stock(insumo,agregar),insumos))
+    list(map(lambda insumo: sumar_stock(insumo,agregar),insumos.values())) 
 
     print("Cantidad de stock ingresada")
 
