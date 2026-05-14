@@ -3,27 +3,23 @@
 import re
 from modulo1 import pedir_opcion
 
-datos_personal = {
-    "Carlos": {
-        "telefono": "1234-5678",
-        "direccion": "calle libertad 123",
-        "correo": "carlos.perez@email.com",
-        "obra_social": "OSDE"
-    },
-    "Javier": {
-        "telefono": "9876-5432",
-        "direccion": "calle libertad 456",
-        "correo": "javier.gomez@email.com",
-        "obra_social": "Swiss Medical"
-    }
-}
+datos1={"Nombre":"Carlos Perez",
+       "Telefono":"1234-5678",
+       "Direccion":"calle libertad 123",
+       "Correo":"carlos.perez@email.com",
+       "Obra Social":"OSDE"
+       }
 
-texto1 = "Carlos Perez, telefono 1234-5678, direccion calle libertad 123, correo carlos.perez@email.com, obra social OSDE"
-texto2 = "Javier Gomez, telefono 9876-5432, direccion calle libertad 456, correo javier.gomez@email.com, obra social Swiss Medical"
+datos2={"Nombre":"Javier Gomez",
+       "Telefono":"9876-5432",
+       "Direccion":"calle libertad 456",
+       "Correo":"javier.gomez@email.com",
+       "Obra Social":"Swiss Medical"
+       }
 
 def consultar_dato():
     
-    """ Esta función sirve para consultar los datos de los trabajadores del laboratorio, permitiendo al usuario seleccionar el trabajador y el dato que desea conocer"""
+    """ Esta función sirve para consultar los datos de los trabajadores del laboratorio, permitiendo al usuario seleccionar el trabajador y el dato que desea conocer o todos sus datos"""
     
     while True:
         print("\nSeleccione personal de laboratorio:")
@@ -35,35 +31,49 @@ def consultar_dato():
         if opcion_persona == 3:
             print("Saliendo del programa...")
             return
+        
+        if opcion_persona == 1:
+            persona = datos1
+            
+        else:
+            persona = datos2
 
         print("\nSeleccione el dato que desea conocer:")
-        print("1. Telefono")
-        print("2. Direccion")
-        print("3. Correo")
-        print("4. Obra social")
-        opcion_dato = pedir_opcion("Seleccione numero: ", 1, 4)
-
-        if opcion_persona == 1:
-            persona = "Carlos"
-            texto = texto1
+        
+        opciones={}
+        
+        numero=1
+        for clave,valor in persona.items():
+            if clave!="Nombre":
+                print(f"{numero}. {clave}")
+                opciones[numero]=clave
+                numero+=1
+                
+        print(f"{numero}. Todos los datos del empleado de laboratorio")
+        opciones[numero]="Todos"
+        
+        opcion_dato = pedir_opcion("Seleccione numero: ", 1, len(opciones))
+        dato_elegido=opciones[opcion_dato]
+        
+        if dato_elegido == "Todos":
+            print(f"\nDatos de {persona['Nombre']}:")
+            for clave, valor in persona.items():
+                print(f"{clave}: {valor}")
+        
         else:
-            persona = "Javier"
-            texto = texto2
+            texto=f"{dato_elegido}: {persona[dato_elegido]}"
+            
+            if dato_elegido == "Telefono":
+                resultado = re.findall(r"\d{4}-\d{4}", texto)
+            elif dato_elegido == "Direccion":
+                resultado = re.findall(r"Direccion: (.*?), correo", texto)
+            elif dato_elegido == "Correo":
+                resultado = re.findall(r"[\w\.-]+@[\w\.-]+", texto)
+            else:
+                resultado = re.findall(r"Obra Social: (.*?)$", texto)
 
-        if opcion_dato == 1:
-            dato = "telefono"
-            resultado = re.findall(r"\d{4}-\d{4}", texto)
-        elif opcion_dato == 2:
-            dato = "direccion"
-            resultado = re.findall(r"direccion (.*?), correo", texto)
-        elif opcion_dato == 3:
-            dato = "correo"
-            resultado = re.findall(r"[\w\.-]+@[\w\.-]+", texto)
-        else:
-            dato = "obra social"
-            resultado = re.findall(r"obra social (.*?)$", texto)
+            if resultado:
+                print(f"El {dato_elegido} de {persona['Nombre']} es: {resultado[0]}")
+            else:
+                print(f"No se encontro el {dato_elegido} de {persona['Nombre']}")
 
-        if resultado:
-            print(f"El {dato} de {persona} es: {resultado[0]}")
-        else:
-            print(f"No se encontro el {dato} de {persona}")
