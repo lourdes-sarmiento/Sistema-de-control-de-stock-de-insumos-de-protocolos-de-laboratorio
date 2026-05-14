@@ -3,6 +3,21 @@
 import re
 from modulo1 import pedir_opcion
 
+datos_personal = {
+    "Carlos": {
+        "telefono": "1234-5678",
+        "direccion": "calle libertad 123",
+        "correo": "carlos.perez@email.com",
+        "obra_social": "OSDE"
+    },
+    "Javier": {
+        "telefono": "9876-5432",
+        "direccion": "calle libertad 456",
+        "correo": "javier.gomez@email.com",
+        "obra_social": "Swiss Medical"
+    }
+}
+
 texto1 = "Carlos Perez, telefono 1234-5678, direccion calle libertad 123, correo carlos.perez@email.com, obra social OSDE"
 texto2 = "Javier Gomez, telefono 9876-5432, direccion calle libertad 456, correo javier.gomez@email.com, obra social Swiss Medical"
 
