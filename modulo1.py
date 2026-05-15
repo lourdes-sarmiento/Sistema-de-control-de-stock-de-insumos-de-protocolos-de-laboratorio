@@ -53,31 +53,18 @@ def solicitar_uso_insumo(insumos):
 
     alertar_stock_bajo(insumos)
 
-def temperatura_protocolo_pcr():
-    '''Muestra la temperatura de cada etapa del protocolo PCR utilizando tuplas.'''
-    print()
-    print("Temperaturas del protocolo PCR: ")
-    pcr=(
-        ("Desnaturalizacion", 94, 98),
-        ("Alineamiento", 55, 60),
-        ("Extension", 72, 75)
-    )
-    for proceso, temp_min, temp_max in pcr:
-        print(f"{proceso}: entre {temp_min}°C y {temp_max}°C")
-
 def menu_pcr():
     '''Muestra el menu del protocolo PCR.'''
     opcion = 0
-    while opcion != 4:
+    while opcion != 3:
         print()
         print("Menu del Protocolo PCR")
         print("------------------------")
         print("1. Ver insumos y cantidades")#seleccione el insumo luego seleccione la cantidad a utilizar.
-        print("2. Ver proceso basico") 
+        print("2. Ver proceso basico")
         print("3. Volver al menu principal")
-        print("4. Volver al menu principal")
 
-        opcion = pedir_opcion("Seleccione una opcion: ", 1, 4)
+        opcion = pedir_opcion("Seleccione una opcion: ", 1, 3)
 
         if opcion == 1:
             insumos = mostrar_insumos_pcr()
@@ -85,11 +72,7 @@ def menu_pcr():
         elif opcion == 2:
             mostrar_proceso_basico_pcr()
         elif opcion == 3:
-            temperatura_protocolo_pcr()
-        elif opcion == 4:
             print("Volviendo al menu principal...")
-        
-            
 
 
 def menu_electroforesis():
@@ -385,3 +368,25 @@ def agregar_stock_a_grupo():
     print("Cantidad de stock ingresada")
 
     menu()
+
+def insumos_vto_iguales():
+    """
+    Proposito: Devuelve una lista de insumos con la misma fecha de vencimiento. 
+    """
+    insumos = []
+
+    pcr_vto = datos.fechas_de_vencimiento_pcr()
+    adn_vto = datos.fechas_de_vencimiento_adn()
+    electro_vto = datos.fechas_de_vencimiento_electrofosis()
+
+    comunes = pcr_vto & adn_vto & electro_vto
+    print("Fechas de vencimiento comunes:", comunes)
+    for i in comunes:
+        insumos.append(datos.buscar_insumos_por_fecha(i))
+    
+    return insumos
+
+def main():
+    print(insumos_vto_iguales())
+
+main()
