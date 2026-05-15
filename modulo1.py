@@ -113,19 +113,33 @@ def menu_electroforesis():
         elif opcion == 3:
             print("Volviendo al menu principal...")
 
+def temperatura_protocolo_extraccion_adn():
+    '''Muestra la temperatura de cada etapa del protocolo Extraccion de ADN utilizando tuplas.'''
+    print()
+    print("Temperaturas del protocolo Extraccion de ADN:")
+    extraccion_adn=(
+        ("Lisis celular",55,65),
+        ("Precipitacion",0,-20),
+        ("Recuperacion del ADN",-20,-80)
+    )
+    for proceso,temp_min,temp_max in extraccion_adn:
+        print(f"{proceso}: entre {temp_min}°C y {temp_max}°C")
+
 
 def menu_extraccion_adn():
     '''Muestra el menu del protocolo Extraccion de ADN.'''
     opcion = 0
-    while opcion != 3:
+    while opcion != 4:
         print()
         print("Menu del Protocolo Extraccion de ADN")
         print("-------------------------------------")
         print("1. Ver insumos y cantidades")
         print("2. Ver proceso basico")
-        print("3. Volver al menu principal")
+        print("3. Ver temperatura del protocolo")
+        print("4. Volver al menu principal")
+        
 
-        opcion = pedir_opcion("Seleccione una opcion: ", 1, 3)
+        opcion = pedir_opcion("Seleccione una opcion: ", 1, 4)
 
         if opcion == 1:
             insumos = mostrar_insumos_extraccion_adn()
@@ -133,6 +147,8 @@ def menu_extraccion_adn():
         elif opcion == 2:
             mostrar_proceso_basico_extraccion_adn()
         elif opcion == 3:
+            temperatura_protocolo_extraccion_adn()
+        elif opcion == 4:
             print("Volviendo al menu principal...")
 
 
