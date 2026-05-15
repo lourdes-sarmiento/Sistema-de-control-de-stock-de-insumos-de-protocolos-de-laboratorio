@@ -61,8 +61,9 @@ def menu_pcr():
         print("Menu del Protocolo PCR")
         print("------------------------")
         print("1. Ver insumos y cantidades")#seleccione el insumo luego seleccione la cantidad a utilizar.
-        print("2. Ver proceso basico")
-        print("3. Volver al menu principal")
+        print("2. Ver proceso basico") 
+        print("3. Ver temperatura del protocolo")
+        print("4. Volver al menu principal")
 
         opcion = pedir_opcion("Seleccione una opcion: ", 1, 3)
 
@@ -73,27 +74,41 @@ def menu_pcr():
             mostrar_proceso_basico_pcr()
         elif opcion == 3:
             print("Volviendo al menu principal...")
+        
+def temperatura_protocolo_electroforesis():
+    """Muestra la temperatura de cada etapa del protocolo Electroforesis utilizando tuplas."""
+    print()
+    print("temperaturas del protocolo Electroforesis:")
+    electroforesis=(
+        ("preparacion del gel",55),
+        ("Corrida del ADN",25),
+        ("Recuperacion del ADN",65)
+    )            
+    for proceso,temperatura in electroforesis:
+        print(f"{proceso}: {temperatura}°C")
 
 
 def menu_electroforesis():
     '''Muestra el menu del protocolo Electroforesis.'''
     opcion = 0
-    while opcion != 3:
+    while opcion != 4:
         print()
         print("Menu del Protocolo Electroforesis")
         print("---------------------------------")
         print("1. Ver insumos y cantidades")
         print("2. Ver proceso basico")
-        print("3. Volver al menu principal")
+        print("3. Ver temperatura del protocolo")
+        print("4. Volver al menu principal")
 
-        opcion = pedir_opcion("Seleccione una opcion: ", 1, 3)
-
+        opcion = pedir_opcion("Seleccione una opcion: ", 1, 4)
         if opcion == 1:
             insumos = mostrar_insumos_electroforesis()
             solicitar_uso_insumo(insumos)
         elif opcion == 2:
             mostrar_proceso_basico_electroforesis()
         elif opcion == 3:
+            temperatura_protocolo_electroforesis()
+        elif opcion == 4:
             print("Volviendo al menu principal...")
 
 def temperatura_protocolo_extraccion_adn():
