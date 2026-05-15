@@ -74,7 +74,7 @@ def menu_pcr():
         print("------------------------")
         print("1. Ver insumos y cantidades")#seleccione el insumo luego seleccione la cantidad a utilizar.
         print("2. Ver proceso basico") 
-        print("3. Volver al menu principal")
+        print("3. Ver temperatura del protocolo")
         print("4. Volver al menu principal")
 
         opcion = pedir_opcion("Seleccione una opcion: ", 1, 4)
@@ -105,7 +105,7 @@ def temperatura_protocolo_electroforesis():
 def menu_electroforesis():
     '''Muestra el menu del protocolo Electroforesis.'''
     opcion = 0
-    while opcion != 3:
+    while opcion != 4:
         print()
         print("Menu del Protocolo Electroforesis")
         print("---------------------------------")
