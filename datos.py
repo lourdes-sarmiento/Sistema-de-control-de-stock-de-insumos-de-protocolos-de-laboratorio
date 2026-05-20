@@ -127,6 +127,10 @@ INSUMOS_EXTRACCION_ADN = {
 }
 
 def fechas_de_vencimiento_pcr():
+    """
+    Proposito: Devuelve un conjunto de fechas de vencimiento de los insumos de PCR.
+    Salida: Un conjunto de fechas de vencimiento de los insumos de PCR.
+    """
     fechas_pcr = set()
     
     for i in INSUMOS_PCR.values(): 
@@ -135,18 +139,31 @@ def fechas_de_vencimiento_pcr():
     
 
 def fechas_de_vencimiento_adn():
+    """
+    Proposito: Devuelve un conjunto de fechas de vencimiento de los insumos de Extraccion de ADN.
+    Salida: Un conjunto de fechas de vencimiento de los insumos de Extraccion de ADN.
+    """
     fechas_adn = set()
     for i in INSUMOS_EXTRACCION_ADN.values():
         fechas_adn.add(i["vencimiento"])
     return fechas_adn
 
 def fechas_de_vencimiento_electrofosis():
+    """
+    Proposito: Devuelve un conjunto de fechas de vencimiento de los insumos de Electrofosis.
+    Salida: Un conjunto de fechas de vencimiento de los insumos de Electrofosis.
+    """
     fechas_electro = set()
     for i in INSUMOS_ELECTROFORESIS.values():
         fechas_electro.add(i.get("vencimiento"))
     return fechas_electro
 
 def buscar_insumos_por_fecha(fecha):
+    """
+    Proposito: Devuelve una lista de insumos que vencen en la fecha dada.
+    Parametros: fecha (str): La fecha de vencimiento a buscar en formato "YYYY-MM-DD".
+    Salida: Una lista de insumos que vencen en la fecha dada.
+    """
     insumos = []
     
     for insumo in INSUMOS_PCR.values():

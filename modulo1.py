@@ -167,8 +167,8 @@ def menu_extraccion_adn():
 
 def menu():
     '''Muestra el menu principal del programa.'''
-    dato=0
-    while dato != 8:
+    dato = 0
+    while dato != 9:  # CORREGIDO: Ahora evalúa correctamente la opción de salida (9)
         print("***********************************************************************************")
         print("Bienvenido al programa de control de insumos y protocolos de Laboratorios Umbrella")
         print("***********************************************************************************")
@@ -179,10 +179,11 @@ def menu():
         print("5. Agregar stock a todos los protocolos")
         print("6. Mostrar datos de todos los insumos de los protocolos")
         print("7. Consultar datos del personal del laboratorio")
-        print("8. Salir del sistema")
+        print("8. Consultar insumos con igual fecha de vencimiento")
+        print("9. Salir del sistema")
         print()
 
-        dato = pedir_opcion("Ingrese opcion de protocolo a realizar: ", 1, 8)
+        dato = pedir_opcion("Ingrese opcion de protocolo a realizar: ", 1, 9)
 
         if dato == 1:
             print("Has seleccionado el protocolo PCR")
@@ -207,6 +208,9 @@ def menu():
             import datos_personal
             datos_personal.consultar_dato()
         elif dato == 8:
+            print("Has seleccionado consultar insumos con igual fecha de vencimiento")
+            insumos_vto_iguales()
+        elif dato == 9:
             print("Has seleccionado salir del sistema")
 
 def mostrar_insumos_pcr():
@@ -397,11 +401,11 @@ def agregar_stock_a_grupo():
 
     print("Cantidad de stock ingresada")
 
-    menu()
 
 def insumos_vto_iguales():
     """
     Proposito: Devuelve una lista de insumos con la misma fecha de vencimiento. 
+    Salida: Una lista de insumos con la misma fecha de vencimiento.
     """
     insumos = []
 
@@ -415,8 +419,3 @@ def insumos_vto_iguales():
         insumos.append(datos.buscar_insumos_por_fecha(i))
     
     return insumos
-
-def main():
-    print(insumos_vto_iguales())
-
-main()
