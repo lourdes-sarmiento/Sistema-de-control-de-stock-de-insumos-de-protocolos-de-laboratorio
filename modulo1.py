@@ -419,9 +419,7 @@ def agregar_stock_a_grupo():
 def insumos_vto_iguales():
     """
     Proposito: Devuelve una lista de insumos con la misma fecha de vencimiento. 
-    Salida: Una lista de insumos con la misma fecha de vencimiento.
     """
-    insumos = []
 
     pcr_vto = datos.fechas_de_vencimiento_pcr()
     adn_vto = datos.fechas_de_vencimiento_adn()
@@ -430,6 +428,15 @@ def insumos_vto_iguales():
     comunes = pcr_vto & adn_vto & electro_vto
     print("Fechas de vencimiento comunes:", comunes)
     for i in comunes:
-        insumos.append(datos.buscar_insumos_por_fecha(i))
+        insumos = (datos.buscar_insumos_por_fecha(i))
     
-    return insumos
+    for i in insumos: 
+        print(f"Insumos con fecha de vencimiento: {i}")
+        
+    print("1. Volver al menu principal")
+
+    opcion = input("Seleccione una opcion: ")
+
+    if(opcion == "1"):
+        print("Volviendo al menu principal...")
+    
