@@ -26,7 +26,7 @@ datos2={"Nombre":"Javier Gomez",
 def mostrar_valores_en_comun():
     """ Esta función muestra los datos que ambos trabajadores del laboratorio tienen en común,
     como su edad y estado civil, se utiliza sets para encontrar 
-    los valores en común entre ambos diccionarios de datos"""
+    los valores en común entre ambos diccionarios de datos."""
     valores_datos1 = set(datos1.values())
     valores_datos2 = set(datos2.values())
  
