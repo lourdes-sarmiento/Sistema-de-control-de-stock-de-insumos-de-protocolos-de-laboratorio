@@ -34,10 +34,15 @@ def solicitar_uso_insumo(insumos):
         print(f"{id_insumo}. {datos_insumo['nombre']} - Stock disponible: {datos_insumo['cantidad']} {datos_insumo['unidad']}")
         print()
 
+    lista_insumos = list(insumos.values())
+
     try:
         opcion_insumo = int(input("Ingrese el numero del insumo: "))
 
-        insumo_seleccionado = insumos[str(opcion_insumo)]
+        if opcion_insumo < 1:
+            raise IndexError
+
+        insumo_seleccionado = lista_insumos[opcion_insumo - 1]
 
         cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado['nombre']} a utilizar: "))
 
@@ -59,7 +64,7 @@ def solicitar_uso_insumo(insumos):
 
     except ValueError:
         print("Error: debe ingresar un numero valido numerico.")
-    except KeyError:
+    except IndexError:
         print("Error: el insumo seleccionado no existe.")
 
 def temperatura_protocolo_pcr(): 
