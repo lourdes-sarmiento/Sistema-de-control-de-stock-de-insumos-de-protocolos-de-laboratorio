@@ -24,34 +24,43 @@ def alertar_stock_bajo(insumos):
 
 
 def solicitar_uso_insumo(insumos):
-    '''Solicita el insumo a utilizar y la cantidad de stock a descontar.'''
+    '''Solicita el insumo a utilizar y la cantidad de stock a descontar. 
+    Se implemento try-except para manejar errores de ingreso de datos, y se actualiza el stock del insumo seleccionado'''
     print()
     print("Seleccione el insumo que va a utilizar:")
     print()
 
     for id_insumo, datos_insumo in insumos.items():
-        print(f"{id_insumo}. {datos_insumo["nombre"]} - Stock disponible: {datos_insumo["cantidad"]} {datos_insumo["unidad"]}")
+        print(f"{id_insumo}. {datos_insumo['nombre']} - Stock disponible: {datos_insumo['cantidad']} {datos_insumo['unidad']}")
         print()
-        
-    opcion_insumo = pedir_opcion("Ingrese el numero del insumo: ", 1, len(insumos))
-    insumo_seleccionado = insumos[str(opcion_insumo)]
 
-    cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado["nombre"]} a utilizar: "))
-    while cantidad < 1 or cantidad > insumo_seleccionado["cantidad"]:
-        print("Cantidad invalida. Debe ser mayor a 0 y no superar el stock disponible.")
-        cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado["nombre"]} a utilizar: "))
+    try:
+        opcion_insumo = int(input("Ingrese el numero del insumo: "))
 
-    stock_disponible = insumo_seleccionado["cantidad"]
-    stock_restante = insumo_seleccionado["cantidad"] - cantidad
-    insumo_seleccionado["cantidad"] = stock_restante
+        insumo_seleccionado = insumos[str(opcion_insumo)]
 
-    print()
-    print(f"Insumo seleccionado: {insumo_seleccionado["nombre"]}")
-    print(f"Stock disponible: {stock_disponible} {insumo_seleccionado["unidad"]}")
-    print(f"Cantidad a utilizar: {cantidad} {insumo_seleccionado["unidad"]}")
-    print(f"Stock restante: {stock_restante} {insumo_seleccionado["unidad"]}")
+        cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado['nombre']} a utilizar: "))
 
-    alertar_stock_bajo(insumos)
+        while cantidad < 1 or cantidad > insumo_seleccionado["cantidad"]:
+            print("Cantidad invalida. Debe ser mayor a 0 y no superar el stock disponible.")
+            cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado['nombre']} a utilizar: "))
+
+        stock_disponible = insumo_seleccionado["cantidad"]
+        stock_restante = stock_disponible - cantidad
+        insumo_seleccionado["cantidad"] = stock_restante
+
+        print()
+        print(f"Insumo seleccionado: {insumo_seleccionado['nombre']}")
+        print(f"Stock disponible: {stock_disponible} {insumo_seleccionado['unidad']}")
+        print(f"Cantidad a utilizar: {cantidad} {insumo_seleccionado['unidad']}")
+        print(f"Stock restante: {stock_restante} {insumo_seleccionado['unidad']}")
+
+        alertar_stock_bajo(insumos)
+
+    except ValueError:
+        print("Error: debe ingresar un numero valido numerico.")
+    except KeyError:
+        print("Error: el insumo seleccionado no existe.")
 
 def temperatura_protocolo_pcr(): 
     '''Muestra la temperatura de cada etapa del protocolo PCR utilizando tuplas.'''
