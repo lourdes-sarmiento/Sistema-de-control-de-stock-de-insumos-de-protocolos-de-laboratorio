@@ -12,23 +12,26 @@ def menu_entrada():
         print("1. Iniciar sesión")
         print("2. Crear cuenta")
         print("3. Salir")
+        try:
+            opcion = input("Seleccione una opción: ")
 
-        opcion = input("Seleccione una opción: ")
+            if opcion == "1":
+                ingresar()
 
-        if opcion == "1":
-            ingresar()
+            elif opcion == "2":
+                crear_cuenta()
 
-        elif opcion == "2":
-            crear_cuenta()
+            elif opcion == "3":
+                print("Saliendo del sistema...")
+                return
 
-        elif opcion == "3":
-            print("Saliendo del sistema...")
-            return
-
-        else:
-            print("Opción inválida")
-
+            else:
+                print("Opción inválida")
+        except ValueError:
+            print("Error: Entrada no válida. Por favor, ingrese un número correspondiente a las opciones del menú.")
+            
 def crear_cuenta():
+
     
     """ Esta función sirve para crear una nueva cuenta de usuario"""
     
@@ -81,8 +84,5 @@ def ingresar():
                 return
 
 def main():
-    try:
-        menu_entrada()
+    menu_entrada()
 
-    except ValueError:
-        print("Error: Entrada no válida. Por favor, ingrese un número correspondiente a las opciones del menú.")

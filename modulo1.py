@@ -191,7 +191,7 @@ def menu():
         print("3. Protocolo Extraccion de ADN")
         print("4. Agregar stock por protocolo")
         print("5. Agregar stock a todos los protocolos")
-        print("6. Mostrar datos de todos los insumos de los protocolos")
+        print("6. Mostrar datos de todos los insumos d  e los protocolos")
         print("7. Consultar datos del personal del laboratorio")
         print("8. Consultar insumos con igual fecha de vencimiento")
         print("9. Salir del sistema")
@@ -437,6 +437,6 @@ def insumos_vto_iguales():
 
     opcion = input("Seleccione una opcion: ")
 
-    if(opcion == "1"):
+    if(opcion == 1):
         print("Volviendo al menu principal...")
     
