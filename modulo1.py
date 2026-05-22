@@ -448,17 +448,24 @@ def insumos_vto_iguales():
     electro_vto = datos.fechas_de_vencimiento_electrofosis()
 
     comunes = pcr_vto & adn_vto & electro_vto
-    print("Fechas de vencimiento comunes:", comunes)
-    for i in comunes:
-        insumos = (datos.buscar_insumos_por_fecha(i))
-    
-    for i in insumos: 
-        print(f"Insumos con fecha de vencimiento: {i}")
+      
+    for fecha in comunes:
+        anio,mes,dia=fecha.split("-")
+        fecha_prolija=(f"{dia}/{mes}/{anio}")
+        
+        insumos = (datos.buscar_insumos_por_fecha(fecha))
+        print(f"\nInsumos con Fecha de vencimiento en comun: {fecha_prolija}")
+        print("--------------------------------------------")
+        print("                Insumos:                   ")
+        print("--------------------------------------------")
+        for insumos in insumos: 
+            print(f"|  - {insumos:<35}|")
+        print("--------------------------------------------")
         
     print("1. Volver al menu principal")
 
     opcion = input("Seleccione una opcion: ")
 
-    if(opcion == 1):
+    if(opcion == "1"):
         print("Volviendo al menu principal...")
     
