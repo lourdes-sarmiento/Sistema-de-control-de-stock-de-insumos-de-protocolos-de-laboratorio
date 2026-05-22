@@ -8,12 +8,27 @@ def pedir_opcion(mensaje, minimo, maximo):
         try:
             opcion = int(input(mensaje))
         except ValueError:
-            raise ValueError("Debe ingresar un número válido.")
+            print("Debe ingresar un numero valido.")
+            continue
 
         if opcion < minimo or opcion > maximo:
             print(f"Ingrese una opcion entre {minimo} y {maximo}.")
             continue
         return opcion
+
+def pedir_entero_minimo(mensaje, minimo):
+    '''Pide al usuario que ingrese un numero entero mayor o igual al minimo.'''
+    while True:
+        try:
+            numero = int(input(mensaje))
+        except ValueError:
+            print("Debe ingresar un numero valido.")
+            continue
+
+        if numero < minimo:
+            print(f"Ingrese un numero mayor o igual a {minimo}.")
+            continue
+        return numero
 
 def obtener_insumos(insumos):
     '''Devuelve los insumos para recorrerlos, aunque esten guardados en un diccionario.'''
@@ -385,11 +400,7 @@ def agregar_stock():
     pedirInsumoEspecifico = pedir_opcion("Seleccione el insumo al que desea agregar stock: ", 1, len(insumos)) #Luego se le pide que elija el insumo especifico de ese grupo de insumos
     insumoSeleccionado = insumos[str(pedirInsumoEspecifico)]
 
-    cantidadAgregar = int(input(f"Ingrese la cantidad de {insumoSeleccionado["nombre"]} a agregar, 0 para cancelar: "))
-
-    while cantidadAgregar < 0:
-        print("Cantidad invalida. Debe ser un numero positivo.")
-        cantidadAgregar = int(input(f"Ingrese la cantidad de {insumoSeleccionado["nombre"]} a agregar, 0 para cancelar: "))
+    cantidadAgregar = pedir_entero_minimo(f"Ingrese la cantidad de {insumoSeleccionado["nombre"]} a agregar, 0 para cancelar: ", 0)
     if cantidadAgregar == 0:
         print("No se ha agregado stock.")
         return
@@ -427,11 +438,7 @@ def agregar_stock_a_grupo():
     while opcion > 4 or opcion < 0:
         opcion = pedir_opcion("Seleccione un grupo de insumos: ",1,3)
     
-    agregar = int(input("Ingrese el numero de stock a sumar al grupo: ")) # Se le pide la cantidad de stock a sumar al usuario
- 
-    while agregar <= 0 : 
-        agregar = int(input("Ingrese el numero de stock a sumar al grupo: "))
-        print("Cantidad invalida")
+    agregar = pedir_entero_minimo("Ingrese el numero de stock a sumar al grupo: ", 1) # Se le pide la cantidad de stock a sumar al usuario
 
     list(map(lambda insumo: sumar_stock(insumo,agregar),insumos.values())) 
 
