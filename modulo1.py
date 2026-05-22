@@ -4,11 +4,16 @@ import datos
 
 def pedir_opcion(mensaje, minimo, maximo):
     '''Pide al usuario que ingrese una opcion entre minimo y maximo.'''
-    opcion = int(input(mensaje))
-    while opcion < minimo or opcion > maximo:
-        print(f"Ingrese una opcion entre {minimo} y {maximo}.")
-        opcion = int(input(mensaje))
-    return opcion
+    while True:
+        try:
+            opcion = int(input(mensaje))
+        except ValueError:
+            raise ValueError("Debe ingresar un número válido.")
+
+        if opcion < minimo or opcion > maximo:
+            print(f"Ingrese una opcion entre {minimo} y {maximo}.")
+            continue
+        return opcion
 
 def obtener_insumos(insumos):
     '''Devuelve los insumos para recorrerlos, aunque esten guardados en un diccionario.'''
@@ -82,8 +87,7 @@ def temperatura_protocolo_pcr():
 
 def menu_pcr():
     '''Muestra el menu del protocolo PCR.'''
-    opcion = 0
-    while opcion != 4:
+    while True:
         print()
         print("Menu del Protocolo PCR")
         print("------------------------")
@@ -92,7 +96,11 @@ def menu_pcr():
         print("3. Ver temperatura del protocolo")
         print("4. Volver al menu principal")
 
-        opcion = pedir_opcion("Seleccione una opcion: ", 1, 4)
+        try:
+            opcion = pedir_opcion("Seleccione una opcion: ", 1, 4)
+        except ValueError as e:
+            print(e)
+            continue
 
         if opcion == 1:
             insumos = mostrar_insumos_pcr()
@@ -103,6 +111,7 @@ def menu_pcr():
             temperatura_protocolo_pcr()
         elif opcion == 4:
             print("Volviendo al menu principal...")
+            break
         
 def temperatura_protocolo_electroforesis():
     """Muestra la temperatura de cada etapa del protocolo Electroforesis utilizando tuplas."""
@@ -119,8 +128,7 @@ def temperatura_protocolo_electroforesis():
 
 def menu_electroforesis():
     '''Muestra el menu del protocolo Electroforesis.'''
-    opcion = 0
-    while opcion != 4:
+    while True:
         print()
         print("Menu del Protocolo Electroforesis")
         print("---------------------------------")
@@ -129,7 +137,12 @@ def menu_electroforesis():
         print("3. Ver temperatura del protocolo")
         print("4. Volver al menu principal")
 
-        opcion = pedir_opcion("Seleccione una opcion: ", 1, 4)
+        try:
+            opcion = pedir_opcion("Seleccione una opcion: ", 1, 4)
+        except ValueError as e:
+            print(e)
+            continue
+        
         if opcion == 1:
             insumos = mostrar_insumos_electroforesis()
             solicitar_uso_insumo(insumos)
@@ -139,6 +152,7 @@ def menu_electroforesis():
             temperatura_protocolo_electroforesis()
         elif opcion == 4:
             print("Volviendo al menu principal...")
+            break
 
 def temperatura_protocolo_extraccion_adn():
     '''Muestra la temperatura de cada etapa del protocolo Extraccion de ADN utilizando tuplas.'''
@@ -155,8 +169,7 @@ def temperatura_protocolo_extraccion_adn():
 
 def menu_extraccion_adn():
     '''Muestra el menu del protocolo Extraccion de ADN.'''
-    opcion = 0
-    while opcion != 4:
+    while True:
         print()
         print("Menu del Protocolo Extraccion de ADN")
         print("-------------------------------------")
@@ -166,7 +179,11 @@ def menu_extraccion_adn():
         print("4. Volver al menu principal")
         
 
-        opcion = pedir_opcion("Seleccione una opcion: ", 1, 4)
+        try:
+            opcion = pedir_opcion("Seleccione una opcion: ", 1, 4)
+        except ValueError as e:
+            print(e)
+            continue
 
         if opcion == 1:
             insumos = mostrar_insumos_extraccion_adn()
@@ -177,6 +194,7 @@ def menu_extraccion_adn():
             temperatura_protocolo_extraccion_adn()
         elif opcion == 4:
             print("Volviendo al menu principal...")
+            break
 
 
 def menu():
@@ -197,7 +215,11 @@ def menu():
         print("9. Salir del sistema")
         print()
 
-        dato = pedir_opcion("Ingrese opcion de protocolo a realizar: ", 1, 9)
+        try:
+            dato = pedir_opcion("Ingrese opcion de protocolo a realizar: ", 1, 9)
+        except ValueError as e:
+            print(e)
+            continue
 
         if dato == 1:
             print("Has seleccionado el protocolo PCR")
