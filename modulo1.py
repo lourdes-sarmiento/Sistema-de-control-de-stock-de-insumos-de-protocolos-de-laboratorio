@@ -182,7 +182,7 @@ def menu_extraccion_adn():
 def menu():
     '''Muestra el menu principal del programa.'''
     dato = 0
-    while dato != 9:  # CORREGIDO: Ahora evalúa correctamente la opción de salida (9)
+    while dato != 9:
         print("***********************************************************************************")
         print("Bienvenido al programa de control de insumos y protocolos de Laboratorios Umbrella")
         print("***********************************************************************************")

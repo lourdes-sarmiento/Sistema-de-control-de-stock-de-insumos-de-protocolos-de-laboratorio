@@ -81,4 +81,8 @@ def ingresar():
                 return
 
 def main():
-    menu_entrada()
+    try:
+        menu_entrada()
+
+    except ValueError:
+        print("Error: Entrada no válida. Por favor, ingrese un número correspondiente a las opciones del menú.")
