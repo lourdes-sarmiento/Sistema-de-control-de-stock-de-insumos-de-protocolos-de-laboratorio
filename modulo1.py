@@ -415,7 +415,11 @@ def sumar_stock(insumo,stock_a_agregar):
     Parametros: insumo (lista): La lista del insumo al que se le va a agregar stock. stock_a_agregar: Int
     Retorna: No retorna nada, pero actualiza la cantidad del insumo seleccionado.
     """
-    insumo["cantidad"] += stock_a_agregar
+    if stock_a_agregar < 0:
+        print("No se puede agregar una cantidad negativa de stock.")
+        return
+    else:
+        insumo["cantidad"] += stock_a_agregar
 
 def agregar_stock_a_grupo():
     """
