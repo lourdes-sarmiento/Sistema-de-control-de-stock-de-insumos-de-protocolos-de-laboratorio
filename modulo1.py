@@ -1,5 +1,5 @@
 import datos
-
+from funciones_cargapermanente import cargar_datos_insumos, guardar_datos_insumos
 #funciones para mostrar los insumos y procesos basicos de cada protocolo, y para pedir opciones al usuario en los menus
 
 def pedir_opcion(mensaje, minimo, maximo):
@@ -264,9 +264,10 @@ def menu():
         elif dato == 9:
             print("Has seleccionado salir del sistema")
 
-def mostrar_insumos_pcr():
+def mostrar_insumos_pcr():# SE MODIFICOOOOOOOOOOOOOOO
     """Muestra los insumos necesarios para el protocolo PCR. """
-    insumos = datos.INSUMOS_PCR
+    datos_insumos = cargar_datos_insumos()
+    insumos = datos_insumos["INSUMOS_PCR"]
 
     print()
     print("Insumos del protocolo PCR:")
@@ -286,8 +287,6 @@ def mostrar_insumos_pcr():
     return insumos
 
 
-
-
 def mostrar_proceso_basico_pcr():
     '''Muestra el proceso basico del protocolo PCR.'''
     print()
@@ -299,9 +298,10 @@ def mostrar_proceso_basico_pcr():
     print("5. Conservar el producto para su analisis.")
 
 
-def mostrar_insumos_electroforesis():
+def mostrar_insumos_electroforesis():#SE MODIFICOOOOOOOOOOOOOOO
     '''Muestra los insumos necesarios para el protocolo Electroforesis.'''
-    insumos = datos.INSUMOS_ELECTROFORESIS
+    datos_insumos = cargar_datos_insumos()
+    insumos = datos_insumos["INSUMOS_ELECTROFORESIS"]
 
     print()
     print("Insumos del protocolo Electroforesis:")
@@ -324,7 +324,8 @@ def mostrar_insumos_electroforesis():
 
 def mostrar_insumos_extraccion_adn():
     '''Muestra los insumos necesarios para el protocolo Extraccion de ADN.'''
-    insumos = datos.INSUMOS_EXTRACCION_ADN
+    datos_insumos = cargar_datos_insumos()
+    insumos = datos_insumos["INSUMOS_EXTRACCION_ADN"]
 
     print()
     print("Insumos del protocolo Extraccion de ADN:")
@@ -373,7 +374,7 @@ def mostrar_datos():
     mostrar_insumos_electroforesis()
     mostrar_insumos_extraccion_adn()
 
-def agregar_stock():
+def agregar_stock():# SE MODIFICOOOOOOOOOOOOO
     """
     Proposito: Permite al usuario seleccionar un insumo para agregar stock
     Retorna: No retorna nada, pero actualiza la cantidad del insumo seleccionado.
@@ -385,15 +386,21 @@ def agregar_stock():
     grupo_Insumos = pedir_opcion("Seleccione un insumo: ", 1, 3) #Primero se le pide que elija uno de los 3 grupos de insumos
     
     if grupo_Insumos == 1:
-        insumos = datos.INSUMOS_PCR
+        nombre_grupo= "INSUMOS_PCR"
+        datos_insumos = cargar_datos_insumos()
+        insumos = datos_insumos["INSUMOS_PCR"]
         print("Has seleccionado agregar stock para un insumo del protocolo PCR")
         mostrar_insumos_pcr()
     elif grupo_Insumos == 2:
-        insumos = datos.INSUMOS_ELECTROFORESIS
+        nombre_grupo= "INSUMOS_ELECTROFORESIS"
+        datos_insumos = cargar_datos_insumos()
+        insumos = datos_insumos["INSUMOS_ELECTROFORESIS"]
         print("Has seleccionado agregar stock para un insumo del protocolo Electroforesis")
         mostrar_insumos_electroforesis()
     elif grupo_Insumos == 3:
-        insumos = datos.INSUMOS_EXTRACCION_ADN
+        nombre_grupo= "INSUMOS_EXTRACCION_ADN"
+        datos_insumos = cargar_datos_insumos()
+        insumos = datos_insumos["INSUMOS_EXTRACCION_ADN"]
         print("Has seleccionado agregar stock para un insumo del protocolo Extraccion de ADN")
         mostrar_insumos_extraccion_adn()
     
@@ -406,22 +413,37 @@ def agregar_stock():
         return
     
     print("Cantidad de stock ingresada")
-    sumar_stock(insumoSeleccionado,cantidadAgregar) #Se llama a la funcion auxiliar para sumar stock al insumo seleccionado
+    sumar_stock(nombre_grupo, str(pedirInsumoEspecifico), cantidadAgregar) #Se llama a la funcion auxiliar para sumar stock al insumo seleccionado
 
 
-def sumar_stock(insumo,stock_a_agregar):
+def sumar_stock(grupo_insumos, id_insumo, stock_a_agregar):# SE MODIFICOOOOOOOOOOOOOOOOO
     """
-    Proposito: Suma el stock de un determinado insumo.
-    Parametros: insumo (lista): La lista del insumo al que se le va a agregar stock. stock_a_agregar: Int
-    Retorna: No retorna nada, pero actualiza la cantidad del insumo seleccionado.
+    Proposito: Suma stock a un insumo especifico dentro del archivo datos_insumos.json.
+    Parametros:
+        grupo_insumos: nombre del grupo en el JSON, por ejemplo "INSUMOS_PCR"
+        id_insumo: clave del insumo dentro del grupo, por ejemplo "1"
+        stock_a_agregar: cantidad de stock a sumar
+    Retorna: No retorna nada, pero actualiza datos_insumos.json.
     """
     if stock_a_agregar < 0:
         print("No se puede agregar una cantidad negativa de stock.")
         return
-    else:
-        insumo["cantidad"] += stock_a_agregar
 
-def agregar_stock_a_grupo():
+    datos_insumos = cargar_datos_insumos()
+
+    if grupo_insumos not in datos_insumos:
+        print("El grupo de insumos no existe.")
+        return
+
+    if id_insumo not in datos_insumos[grupo_insumos]:
+        print("El insumo seleccionado no existe.")
+        return
+
+    datos_insumos[grupo_insumos][id_insumo]["cantidad"] += stock_a_agregar
+
+    guardar_datos_insumos(datos_insumos)
+
+def agregar_stock_a_grupo():#SE MODIFICOOOOOOOOOOOOOOO
     """
     Proposito: Permite al usuario sumar stock a un grupo de insumos.
     Obs: Si el usuario selecciona un grupo de insumos, se le va a sumar la misma cantidad a todos los insumos de ese grupo. 
@@ -433,20 +455,27 @@ def agregar_stock_a_grupo():
     opcion = pedir_opcion("Seleccione un grupo de insumos: ",1,3) # Se le pide el grupo de insumos al usuario
     
     if opcion == 1:
-        insumos = datos.INSUMOS_PCR
+        nombre_grupo = "INSUMOS_PCR"
+        datos_insumos = cargar_datos_insumos()
+        insumos = datos_insumos["INSUMOS_PCR"]
     elif opcion==2:
-        insumos = datos.INSUMOS_ELECTROFORESIS
+        nombre_grupo = "INSUMOS_ELECTROFORESIS"
+        datos_insumos = cargar_datos_insumos()
+        insumos = datos_insumos["INSUMOS_ELECTROFORESIS"]
     elif opcion==3:
-        insumos = datos.INSUMOS_EXTRACCION_ADN
-    
+        nombre_grupo = "INSUMOS_EXTRACCION_ADN"
+        datos_insumos = cargar_datos_insumos()
+        insumos = datos_insumos["INSUMOS_EXTRACCION_ADN"]
+
     while opcion > 4 or opcion < 0:
         opcion = pedir_opcion("Seleccione un grupo de insumos: ",1,3)
     
     agregar = pedir_entero_minimo("Ingrese el numero de stock a sumar al grupo: ", 1) # Se le pide la cantidad de stock a sumar al usuario
 
-    list(map(lambda insumo: sumar_stock(insumo,agregar),insumos.values())) 
+    list(map(lambda insumo: sumar_stock(nombre_grupo, str(insumo), agregar), insumos.values()))
 
     print("Cantidad de stock ingresada")
+
 
 
 def insumos_vto_iguales():
