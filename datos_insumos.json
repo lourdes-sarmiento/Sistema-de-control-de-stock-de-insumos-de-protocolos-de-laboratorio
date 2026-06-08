@@ -2,7 +2,7 @@
     "INSUMOS_PCR": {
         "1": {
             "nombre": "Primers",
-            "cantidad": 13,
+            "cantidad": 5,
             "unidad": "unidades",
             "stock_minimo": 1,
             "vencimiento": "2026-12-15"
@@ -37,7 +37,7 @@
         },
         "6": {
             "nombre": "Tubos de PCR",
-            "cantidad": 10,
+            "cantidad": 7,
             "unidad": "unidades",
             "stock_minimo": 2,
             "vencimiento": "2028-05-01"
@@ -46,28 +46,28 @@
     "INSUMOS_ELECTROFORESIS": {
         "1": {
             "nombre": "Gel de agarosa",
-            "cantidad": 6,
+            "cantidad": 8,
             "unidad": "frascos",
             "stock_minimo": 2,
             "vencimiento": "2026-11-30"
         },
         "2": {
             "nombre": "Buffer de corrida",
-            "cantidad": 8,
+            "cantidad": 6,
             "unidad": "frascos",
             "stock_minimo": 2,
             "vencimiento": "2026-10-12"
         },
         "3": {
             "nombre": "Agente intercalante",
-            "cantidad": 2,
+            "cantidad": 4,
             "unidad": "frascos",
             "stock_minimo": 2,
             "vencimiento": "2026-07-05"
         },
         "4": {
             "nombre": "Marcador peso mol.",
-            "cantidad": 1,
+            "cantidad": 3,
             "unidad": "unidades",
             "stock_minimo": 2,
             "vencimiento": "2026-09-22"
