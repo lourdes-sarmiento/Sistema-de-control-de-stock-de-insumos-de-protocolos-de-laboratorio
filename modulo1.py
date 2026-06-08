@@ -231,7 +231,7 @@ def menu():
         print()
 
         try:
-            dato = pedir_opcion("Ingrese opcion de protocolo a realizar: ", 1, 9)
+            dato = pedir_opcion("Ingrese opcion de protocolo a realizar o otra opcion requerida: ", 1, 9)
         except ValueError as e:
             print(e)
             continue
@@ -271,7 +271,7 @@ def mostrar_insumos_pcr():# SE MODIFICOOOOOOOOOOOOOOO
 
     print()
     print("Insumos del protocolo PCR:")
-    print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
+    print("ID        |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
     list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]["nombre"]:<18} {insumo[1]["cantidad"]:<7} {insumo[1]["unidad"]:<11} {insumo[1]["stock_minimo"]}"), insumos.items()))
@@ -305,7 +305,7 @@ def mostrar_insumos_electroforesis():#SE MODIFICOOOOOOOOOOOOOOO
 
     print()
     print("Insumos del protocolo Electroforesis:")
-    print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
+    print("ID        |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
     list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]["nombre"]:<18} {insumo[1]["cantidad"]:<7} {insumo[1]["unidad"]:<11} {insumo[1]["stock_minimo"]}"), insumos.items()))
@@ -329,7 +329,7 @@ def mostrar_insumos_extraccion_adn():
 
     print()
     print("Insumos del protocolo Extraccion de ADN:")
-    print("Protocolo |  Insumo     |     Stock |  Unidad  |   Alerta en")
+    print("ID        |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
     list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]["nombre"]:<18} {insumo[1]["cantidad"]:<7} {insumo[1]["unidad"]:<11} {insumo[1]["stock_minimo"]}"), insumos.items()))
@@ -472,7 +472,8 @@ def agregar_stock_a_grupo():#SE MODIFICOOOOOOOOOOOOOOO
     
     agregar = pedir_entero_minimo("Ingrese el numero de stock a sumar al grupo: ", 1) # Se le pide la cantidad de stock a sumar al usuario
 
-    list(map(lambda insumo: sumar_stock(nombre_grupo, str(insumo), agregar), insumos.values()))
+    for id_insumo in insumos:
+        sumar_stock(nombre_grupo, id_insumo, agregar) # Se llama a la funcion auxiliar para sumar stock a cada insumo del grupo seleccionado
 
     print("Cantidad de stock ingresada")
 
