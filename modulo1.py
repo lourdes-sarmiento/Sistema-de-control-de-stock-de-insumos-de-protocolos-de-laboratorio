@@ -43,8 +43,8 @@ def alertar_stock_bajo(insumos):
     ]
 
 
-def solicitar_uso_insumo(insumos):
-    '''Solicita el insumo a utilizar y la cantidad de stock a descontar. 
+def solicitar_uso_insumo(nombre_grupo, insumos):
+    '''Solicita el insumo a utilizar y la cantidad de stock a descontar.
     Se implemento try-except para manejar errores de ingreso de datos, y se actualiza el stock del insumo seleccionado'''
     print()
     print("Seleccione el insumo que va a utilizar:")
@@ -54,15 +54,13 @@ def solicitar_uso_insumo(insumos):
         print(f"{id_insumo}. {datos_insumo['nombre']} - Stock disponible: {datos_insumo['cantidad']} {datos_insumo['unidad']}")
         print()
 
-    lista_insumos = list(insumos.values())
-
     try:
-        opcion_insumo = int(input("Ingrese el numero del insumo: "))
+        id_insumo = input("Ingrese el numero del insumo: ")
 
-        if opcion_insumo < 1:
+        if id_insumo not in insumos:
             raise IndexError
 
-        insumo_seleccionado = lista_insumos[opcion_insumo - 1]
+        insumo_seleccionado = insumos[id_insumo]
 
         cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado['nombre']} a utilizar: "))
 
@@ -73,6 +71,10 @@ def solicitar_uso_insumo(insumos):
         stock_disponible = insumo_seleccionado["cantidad"]
         stock_restante = stock_disponible - cantidad
         insumo_seleccionado["cantidad"] = stock_restante
+
+        datos_insumos = cargar_datos_insumos()
+        datos_insumos[nombre_grupo][id_insumo]["cantidad"] = stock_restante
+        guardar_datos_insumos(datos_insumos)
 
         print()
         print(f"Insumo seleccionado: {insumo_seleccionado['nombre']}")
