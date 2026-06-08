@@ -121,7 +121,7 @@ def menu_pcr():
 
         if opcion == 1:
             insumos = mostrar_insumos_pcr()
-            solicitar_uso_insumo(insumos)
+            solicitar_uso_insumo("INSUMOS_PCR", insumos)
         elif opcion == 2:
             mostrar_proceso_basico_pcr()
         elif opcion == 3:
@@ -162,7 +162,7 @@ def menu_electroforesis():
         
         if opcion == 1:
             insumos = mostrar_insumos_electroforesis()
-            solicitar_uso_insumo(insumos)
+            solicitar_uso_insumo("INSUMOS_ELECTROFORESIS", insumos)
         elif opcion == 2:
             mostrar_proceso_basico_electroforesis()
         elif opcion == 3:
@@ -204,7 +204,7 @@ def menu_extraccion_adn():
 
         if opcion == 1:
             insumos = mostrar_insumos_extraccion_adn()
-            solicitar_uso_insumo(insumos)
+            solicitar_uso_insumo("INSUMOS_EXTRACCION_ADN", insumos)
         elif opcion == 2:
             mostrar_proceso_basico_extraccion_adn()
         elif opcion == 3:
