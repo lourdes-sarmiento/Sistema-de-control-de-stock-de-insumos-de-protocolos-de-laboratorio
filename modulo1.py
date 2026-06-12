@@ -38,7 +38,7 @@ def alertar_stock_bajo(insumos):
     '''Genera alertas para los insumos con stock menor o igual a su nivel minimo usando lista por comprension,funcion lambda y filter .'''
     insumos_stock_bajo=list(filter(lambda insumo: insumo["cantidad"] <= insumo["stock_minimo"], obtener_insumos(insumos)))
     return [
-        f"Alerta: {insumo["nombre"]} tiene {insumo["cantidad"]} {insumo["unidad"]} disponible(s). Se debe reabastecer."
+        f"Alerta: {insumo['nombre']} tiene {insumo['cantidad']} {insumo['unidad']} disponible(s). Se debe reabastecer."
         for insumo in insumos_stock_bajo
     ]
 
@@ -269,17 +269,7 @@ def menu_personal():
             if agregar_personal(datos_nuevo):
                 print("Personal agregado con exito.")
         elif opcion == 3:
-            nombre_persona = input("Ingrese el nombre de la persona a modificar: ")
-            nuevos_datos = {
-                "Nombre": input("Nuevo Nombre (dejar vacio para mantener): "),
-                "Telefono": input("Nuevo Telefono (dejar vacio para mantener): "),
-                "Direccion": input("Nueva Direccion (dejar vacio para mantener): "),
-                "Correo": input("Nuevo Correo (dejar vacio para mantener): "),
-                "Obra Social": input("Nueva Obra Social (dejar vacio para mantener): "),
-                "Estado Civil": input("Nuevo Estado Civil (dejar vacio para mantener): "),
-                "Edad": input("Nueva Edad (dejar vacio para mantener): "),
-            }
-            if modificar_personal(nombre_persona, nuevos_datos):
+            if modificar_personal():
                 print("Personal modificado con exito.")
         elif opcion == 4:
             nombre_persona = input("Ingrese el nombre de la persona a eliminar: ")
@@ -354,7 +344,7 @@ def mostrar_insumos_pcr():
     print("ID        |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
-    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]["nombre"]:<18} {insumo[1]["cantidad"]:<7} {insumo[1]["unidad"]:<11} {insumo[1]["stock_minimo"]}"), insumos.items()))
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]['nombre']:<18} {insumo[1]['cantidad']:<7} {insumo[1]['unidad']:<11} {insumo[1]['stock_minimo']}"), insumos.items()))
 
     alertas = alertar_stock_bajo(insumos)
     if alertas:
@@ -388,7 +378,7 @@ def mostrar_insumos_electroforesis():
     print("ID        |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
-    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]["nombre"]:<18} {insumo[1]["cantidad"]:<7} {insumo[1]["unidad"]:<11} {insumo[1]["stock_minimo"]}"), insumos.items()))
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]['nombre']:<18} {insumo[1]['cantidad']:<7} {insumo[1]['unidad']:<11} {insumo[1]['stock_minimo']}"), insumos.items()))
 
 
     alertas = alertar_stock_bajo(insumos)
@@ -412,7 +402,7 @@ def mostrar_insumos_extraccion_adn():
     print("ID        |  Insumo     |     Stock |  Unidad  |   Alerta en")
     print("--------------------------------------------------------------")
 
-    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]["nombre"]:<18} {insumo[1]["cantidad"]:<7} {insumo[1]["unidad"]:<11} {insumo[1]["stock_minimo"]}"), insumos.items()))
+    list(map(lambda insumo: print(f"{insumo[0]:<11} {insumo[1]['nombre']:<18} {insumo[1]['cantidad']:<7} {insumo[1]['unidad']:<11} {insumo[1]['stock_minimo']}"), insumos.items()))
 
     alertas = alertar_stock_bajo(insumos)
     if alertas:
@@ -487,7 +477,7 @@ def agregar_stock():
     pedirInsumoEspecifico = pedir_opcion("Seleccione el insumo al que desea agregar stock: ", 1, len(insumos)) #Luego se le pide que elija el insumo especifico de ese grupo de insumos
     insumoSeleccionado = insumos[str(pedirInsumoEspecifico)]
 
-    cantidadAgregar = pedir_entero_minimo(f"Ingrese la cantidad de {insumoSeleccionado["nombre"]} a agregar, 0 para cancelar: ", 0)
+    cantidadAgregar = pedir_entero_minimo(f"Ingrese la cantidad de {insumoSeleccionado['nombre']} a agregar, 0 para cancelar: ", 0)
     if cantidadAgregar == 0:
         print("No se ha agregado stock.")
         return

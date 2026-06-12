@@ -73,10 +73,6 @@ def guardar_datos_personal(datos_personal):
 def agregar_personal(datos_nuevo):
     datos_personal = cargar_datos_personal()
 
-    if not isinstance(datos_nuevo, dict):
-        print("Los datos del personal deben ser un diccionario.")
-        return False
-
     if "Nombre" not in datos_nuevo or "Telefono" not in datos_nuevo or "Direccion" not in datos_nuevo or "Correo" not in datos_nuevo or "Obra Social" not in datos_nuevo or "Estado Civil" not in datos_nuevo or "Edad" not in datos_nuevo:
         print("Faltan campos obligatorios.")
         return False
@@ -87,14 +83,13 @@ def agregar_personal(datos_nuevo):
             print("Ya existe una persona con ese nombre.")
             return False
 
-    numero_maximo = 0
-    for clave in datos_personal:
-        if clave.startswith("datos"):
-            sufijo = clave[5:]
-            if sufijo.isdigit():
-                numero_maximo = max(numero_maximo, int(sufijo))
+    numero_nuevo = len(datos_personal) + 1
+    clave_nueva = f"datos{numero_nuevo}"
 
-    clave_nueva = f"datos{numero_maximo + 1}"
+    while clave_nueva in datos_personal:
+        numero_nuevo += 1
+        clave_nueva = f"datos{numero_nuevo}"
+
     datos_personal[clave_nueva] = {
         "Nombre": datos_nuevo["Nombre"],
         "Telefono": datos_nuevo["Telefono"],
@@ -108,8 +103,9 @@ def agregar_personal(datos_nuevo):
     return True
 
 
-def modificar_personal(nombre_persona, nuevos_datos):
+def modificar_personal():
     datos_personal = cargar_datos_personal()
+    nombre_persona = input("Ingrese el nombre de la persona a modificar: ")
     nombre_buscado = nombre_persona.strip().lower()
     clave_persona = None
 
@@ -122,26 +118,52 @@ def modificar_personal(nombre_persona, nuevos_datos):
         print("No se encontro una persona con ese nombre.")
         return False
 
-    if not isinstance(nuevos_datos, dict):
-        print("Los nuevos datos deben ser un diccionario.")
-        return False
-
     persona_actualizada = datos_personal[clave_persona]
 
-    if "Nombre" in nuevos_datos and nuevos_datos["Nombre"] != "":
-        persona_actualizada["Nombre"] = nuevos_datos["Nombre"]
-    if "Telefono" in nuevos_datos and nuevos_datos["Telefono"] != "":
-        persona_actualizada["Telefono"] = nuevos_datos["Telefono"]
-    if "Direccion" in nuevos_datos and nuevos_datos["Direccion"] != "":
-        persona_actualizada["Direccion"] = nuevos_datos["Direccion"]
-    if "Correo" in nuevos_datos and nuevos_datos["Correo"] != "":
-        persona_actualizada["Correo"] = nuevos_datos["Correo"]
-    if "Obra Social" in nuevos_datos and nuevos_datos["Obra Social"] != "":
-        persona_actualizada["Obra Social"] = nuevos_datos["Obra Social"]
-    if "Estado Civil" in nuevos_datos and nuevos_datos["Estado Civil"] != "":
-        persona_actualizada["Estado Civil"] = nuevos_datos["Estado Civil"]
-    if "Edad" in nuevos_datos and nuevos_datos["Edad"] != "":
-        persona_actualizada["Edad"] = nuevos_datos["Edad"]
+    print("\nSeleccione el dato que desea modificar:")
+    print("1. Nombre")
+    print("2. Telefono")
+    print("3. Direccion")
+    print("4. Correo")
+    print("5. Obra Social")
+    print("6. Estado Civil")
+    print("7. Edad")
+
+    opcion_valida = False
+    while opcion_valida == False:
+        try:
+            opcion = int(input("Seleccione numero: "))
+        except ValueError:
+            print("Debe ingresar un numero valido.")
+            continue
+
+        if opcion < 1 or opcion > 7:
+            print("Ingrese una opcion entre 1 y 7.")
+        else:
+            opcion_valida = True
+
+    if opcion == 1:
+        campo_elegido = "Nombre"
+    elif opcion == 2:
+        campo_elegido = "Telefono"
+    elif opcion == 3:
+        campo_elegido = "Direccion"
+    elif opcion == 4:
+        campo_elegido = "Correo"
+    elif opcion == 5:
+        campo_elegido = "Obra Social"
+    elif opcion == 6:
+        campo_elegido = "Estado Civil"
+    elif opcion == 7:
+        campo_elegido = "Edad"
+
+    nuevo_valor = input(f"Ingrese el nuevo valor para {campo_elegido}: ")
+
+    if nuevo_valor == "":
+        print("No se modifico el dato porque ingreso un valor vacio.")
+        return False
+
+    persona_actualizada[campo_elegido] = nuevo_valor
 
     datos_personal[clave_persona] = persona_actualizada
     guardar_datos_personal(datos_personal)
