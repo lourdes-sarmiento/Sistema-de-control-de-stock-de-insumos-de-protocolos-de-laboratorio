@@ -61,12 +61,24 @@ def solicitar_uso_insumo(nombre_grupo, insumos):
             raise IndexError
 
         insumo_seleccionado = insumos[id_insumo]
+        
+        cantidad_confirmada= False
+        while cantidad_confirmada==False:
 
-        cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado['nombre']} a utilizar: "))
-
-        while cantidad < 1 or cantidad > insumo_seleccionado["cantidad"]:
-            print("Cantidad invalida. Debe ser mayor a 0 y no superar el stock disponible.")
             cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado['nombre']} a utilizar: "))
+
+            while cantidad < 1 or cantidad > insumo_seleccionado["cantidad"]:
+                print("Cantidad invalida. Debe ser mayor a 0 y no superar el stock disponible.")
+                cantidad = int(input(f"Ingrese la cantidad de {insumo_seleccionado['nombre']} a utilizar: "))
+            print()
+            print(f"Cantidad de {insumo_seleccionado['nombre']} a utilizar: {cantidad} {insumo_seleccionado['unidad']}")
+            confirmacion = input("¿Confirma que desea utilizar esta cantidad? (s/n): ").strip().lower()
+            if confirmacion=="s":
+                cantidad_confirmada=True
+            elif confirmacion=="n":
+                print("Operacion cancelada. Por favor, ingrese la cantidad nuevamente.")
+            
+        
 
         stock_disponible = insumo_seleccionado["cantidad"]
         stock_restante = stock_disponible - cantidad
