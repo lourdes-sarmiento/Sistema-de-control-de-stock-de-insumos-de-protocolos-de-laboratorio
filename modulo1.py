@@ -1,5 +1,5 @@
 import datos
-from funciones_cargapermanente import cargar_datos_insumos, guardar_datos_insumos, cargar_estadisticas_insumos, guardar_estadisticas_insumos
+from funciones_cargapermanente import cargar_datos_insumos, guardar_datos_insumos, cargar_estadisticas_insumos, guardar_estadisticas_insumos, cargar_datos_personal, guardar_datos_personal, agregar_personal, modificar_personal, eliminar_personal
 #funciones para mostrar los insumos y procesos basicos de cada protocolo, y para pedir opciones al usuario en los menus
 
 def pedir_opcion(mensaje, minimo, maximo):
@@ -235,6 +235,59 @@ def menu_extraccion_adn():
             print("Volviendo al menu principal...")
             break
 
+def menu_personal():
+    """Muestra el menu de gestion del personal del laboratorio."""
+    while True:
+        print()
+        print("Menu del Personal del Laboratorio")
+        print("---------------------------------")
+        print("1. Consultar datos del personal")
+        print("2. Agregar personal")
+        print("3. Modificar personal")
+        print("4. Eliminar personal")
+        print("5. Volver al menu principal")
+
+        try:
+            opcion = pedir_opcion("Seleccione una opcion: ", 1, 5)
+        except ValueError as e:
+            print(e)
+            continue
+
+        if opcion == 1:
+            import datos_personal
+            datos_personal.consultar_dato()
+        elif opcion == 2:
+            datos_nuevo = {
+                "Nombre": input("Nombre: "),
+                "Telefono": input("Telefono: "),
+                "Direccion": input("Direccion: "),
+                "Correo": input("Correo: "),
+                "Obra Social": input("Obra Social: "),
+                "Estado Civil": input("Estado Civil: "),
+                "Edad": input("Edad: "),
+            }
+            if agregar_personal(datos_nuevo):
+                print("Personal agregado con exito.")
+        elif opcion == 3:
+            nombre_persona = input("Ingrese el nombre de la persona a modificar: ")
+            nuevos_datos = {
+                "Nombre": input("Nuevo Nombre (dejar vacio para mantener): "),
+                "Telefono": input("Nuevo Telefono (dejar vacio para mantener): "),
+                "Direccion": input("Nueva Direccion (dejar vacio para mantener): "),
+                "Correo": input("Nuevo Correo (dejar vacio para mantener): "),
+                "Obra Social": input("Nueva Obra Social (dejar vacio para mantener): "),
+                "Estado Civil": input("Nuevo Estado Civil (dejar vacio para mantener): "),
+                "Edad": input("Nueva Edad (dejar vacio para mantener): "),
+            }
+            if modificar_personal(nombre_persona, nuevos_datos):
+                print("Personal modificado con exito.")
+        elif opcion == 4:
+            nombre_persona = input("Ingrese el nombre de la persona a eliminar: ")
+            if eliminar_personal(nombre_persona):
+                print("Personal eliminado con exito.")
+        elif opcion == 5:
+            print("Volviendo al menu principal...")
+            break
 
 def menu():
     '''Muestra el menu principal del programa.'''
@@ -249,7 +302,7 @@ def menu():
         print("4. Agregar stock por protocolo")
         print("5. Agregar stock a todos los protocolos")
         print("6. Mostrar datos de todos los insumos de los protocolos")
-        print("7. Consultar datos del personal del laboratorio")
+        print("7. Gestionar datos del personal del laboratorio")
         print("8. Consultar insumos con igual fecha de vencimiento")
         print("9. Estadisticas")
         print("10. Salir del sistema")
@@ -280,9 +333,8 @@ def menu():
             print("Has seleccionado ver todo el stock")
             mostrar_datos()
         elif dato == 7:
-            print("Has seleccionado consultar datos del personal del laboratorio")
-            import datos_personal
-            datos_personal.consultar_dato()
+            print("Has seleccionado gestionar datos del personal del laboratorio")
+            menu_personal()
         elif dato == 8:
             print("Has seleccionado consultar insumos con igual fecha de vencimiento")
             insumos_vto_iguales()
