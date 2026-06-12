@@ -1,20 +1,29 @@
 {
-"datos1":{"Nombre":"Carlos Perez",
-       "Telefono":"1234-5678",
-       "Direccion":"calle libertad 123",
-       "Correo":"carlos.perez@email.com",
-       "Obra Social":"OSDE",
-       "Estado Civil":"Casado",
-       "Edad":"30 años"},
-   
-       
- 
-"datos2":{"Nombre":"Javier Gomez",
-       "Telefono":"9876-5432",
-       "Direccion":"calle libertad 456",
-       "Correo":"javier.gomez@email.com",
-       "Obra Social":"Swiss Medical",
-       "Estado Civil":"Casado",
-       "Edad":"30 años"}
-    
+    "datos1": {
+        "Nombre": "Carlos Perez",
+        "Telefono": "1234-5678",
+        "Direccion": "calle libertad 123",
+        "Correo": "carlos.perez@email.com",
+        "Obra Social": "OSDE",
+        "Estado Civil": "Casado",
+        "Edad": "30 años"
+    },
+    "datos2": {
+        "Nombre": "Javier Gomez",
+        "Telefono": "9876-5432",
+        "Direccion": "calle libertad 456",
+        "Correo": "javier.gomez@email.com",
+        "Obra Social": "Swiss Medical",
+        "Estado Civil": "Casado",
+        "Edad": "30 años"
+    },
+    "datos3": {
+        "Nombre": "Josefina Rodriguez",
+        "Telefono": "2343-2343",
+        "Direccion": "calle peru 234",
+        "Correo": "josefa@email.com",
+        "Obra Social": "OSDE",
+        "Estado Civil": "soltera",
+        "Edad": "24"
+    }
 }

@@ -3,105 +3,102 @@
 import re
 from modulo1 import pedir_opcion
  
-datos1={"Nombre":"Carlos Perez",
-       "Telefono":"1234-5678",
-       "Direccion":"calle libertad 123",
-       "Correo":"carlos.perez@email.com",
-       "Obra Social":"OSDE",
-       "Estado Civil":"Casado",
-       "Edad":"30 años"
-   
-       }
- 
-datos2={"Nombre":"Javier Gomez",
-       "Telefono":"9876-5432",
-       "Direccion":"calle libertad 456",
-       "Correo":"javier.gomez@email.com",
-       "Obra Social":"Swiss Medical",
-       "Estado Civil":"Casado",
-       "Edad":"30 años"
-       }
- 
- 
+import re
+
+from funciones_cargapermanente import cargar_datos_personal
+from modulo1 import pedir_opcion
+
+
 def mostrar_valores_en_comun():
-    """ Esta función muestra los datos que ambos trabajadores del laboratorio tienen en común,
-    como su edad y estado civil, se utiliza sets para encontrar 
-    los valores en común entre ambos diccionarios de datos."""
-    valores_datos1 = set(datos1.values())
-    valores_datos2 = set(datos2.values())
- 
-    valores_en_comun = valores_datos1.intersection(valores_datos2)
- 
-    print("\nDatos en común entre ambos trabajadores:")
-    for valor in valores_en_comun:
-        print(valor)
- 
- 
+    """Muestra los valores en comun entre todas las parejas de registros cargados."""
+    datos_personal = cargar_datos_personal()
+    personas = list(datos_personal.values())
+
+    if len(personas) < 2:
+        print("Se necesitan al menos dos personas cargadas para comparar datos en comun.")
+        return
+
+    print("\nDatos en común entre los trabajadores:")
+    for indice1 in range(len(personas)):
+        for indice2 in range(indice1 + 1, len(personas)):
+            persona1 = personas[indice1]
+            persona2 = personas[indice2]
+            valores_en_comun = set(persona1.values()).intersection(set(persona2.values()))
+
+            if valores_en_comun:
+                print(f"{persona1['Nombre']} y {persona2['Nombre']} tienen estos datos en comun:")
+                for valor in valores_en_comun:
+                    print(valor)
+            else:
+                print(f"{persona1['Nombre']} y {persona2['Nombre']} no tienen datos en comun.")
+
+
 def consultar_dato():
-   
-    """ Esta función sirve para consultar los datos de los trabajadores del laboratorio, permitiendo al usuario seleccionar el trabajador y el dato que desea conocer o todos sus datos"""
-   
+    """Consulta los datos del personal cargados en el JSON."""
+    datos_personal = cargar_datos_personal()
+    personas = list(datos_personal.values())
+
+    if not personas:
+        print("No hay personal cargado.")
+        return
+
     while True:
         print("\nSeleccione personal de laboratorio:")
-        print("1. Carlos")
-        print("2. Javier")
-        print("3. Mostrar datos en común entre ambos trabajadores")
-        print("4. Salir")
-        opcion_persona = pedir_opcion("Seleccione numero: ", 1, 4)
- 
-        if opcion_persona == 3:
+        for indice, persona in enumerate(personas, start=1):
+            print(f"{indice}. {persona.get('Nombre', 'Sin nombre')}")
+        print(f"{len(personas) + 1}. Mostrar datos en común entre todos los trabajadores")
+        print(f"{len(personas) + 2}. Salir")
+
+        opcion_persona = pedir_opcion("Seleccione numero: ", 1, len(personas) + 2)
+
+        if opcion_persona == len(personas) + 1:
             mostrar_valores_en_comun()
-        elif opcion_persona == 4:
+            continue
+        if opcion_persona == len(personas) + 2:
             print("Saliendo del programa...")
             return
-       
-        if opcion_persona == 1:
-            persona = datos1
-           
-        else:
-            persona = datos2
- 
+
+        persona = personas[opcion_persona - 1]
+
         print("\nSeleccione el dato que desea conocer:")
-       
-        opciones={}
-       
-        numero=1
-        for clave,valor in persona.items():
-            if clave!="Nombre":
+        opciones = {}
+        numero = 1
+
+        for clave, valor in persona.items():
+            if clave != "Nombre":
                 print(f"{numero}. {clave}")
-                opciones[numero]=clave
-                numero+=1
-               
+                opciones[numero] = clave
+                numero += 1
+
         print(f"{numero}. Todos los datos del empleado de laboratorio")
-        opciones[numero]="Todos"
-       
+        opciones[numero] = "Todos"
+
         opcion_dato = pedir_opcion("Seleccione numero: ", 1, len(opciones))
-        dato_elegido=opciones[opcion_dato]
-       
+        dato_elegido = opciones[opcion_dato]
+
         if dato_elegido == "Todos":
             print(f"\nDatos de {persona['Nombre']}:")
             for clave, valor in persona.items():
                 print(f"{clave}: {valor}")
-       
         else:
-            texto=f"{dato_elegido}: {persona[dato_elegido]}"
-           
+            texto = f"{dato_elegido}: {persona[dato_elegido]}"
+
             if dato_elegido == "Telefono":
                 resultado = re.findall(r"\d{4}-\d{4}", texto)
             elif dato_elegido == "Direccion":
-                resultado = re.findall(r"Direccion: (.*?), correo", texto)
+                resultado = [persona[dato_elegido]] if persona[dato_elegido] else []
             elif dato_elegido == "Correo":
                 resultado = re.findall(r"[\w\.-]+@[\w\.-]+", texto)
             elif dato_elegido == "Obra Social":
-                resultado = re.findall(r"Obra Social: (.*?)$", texto)
+                resultado = [persona[dato_elegido]] if persona[dato_elegido] else []
             elif dato_elegido == "Estado Civil":
-                resultado = re.findall(r"Estado Civil: (.*?)$", texto)
+                resultado = [persona[dato_elegido]] if persona[dato_elegido] else []
             elif dato_elegido == "Edad":
-                resultado = re.findall(r"Edad: (\d+ años)", texto)
- 
+                resultado = [persona[dato_elegido]] if persona[dato_elegido] else []
+            else:
+                resultado = []
+
             if resultado:
                 print(f"El {dato_elegido} de {persona['Nombre']} es: {resultado[0]}")
             else:
                 print(f"No se encontro el {dato_elegido} de {persona['Nombre']}")
- 
-
