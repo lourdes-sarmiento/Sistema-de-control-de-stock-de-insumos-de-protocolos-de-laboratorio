@@ -449,6 +449,8 @@ def agregar_stock():
     Proposito: Permite al usuario seleccionar un insumo para agregar stock
     Retorna: No retorna nada, pero actualiza la cantidad del insumo seleccionado.
     """
+    datos_insumos = cargar_datos_insumos()
+
     print("1. PCR")
     print("2. Electroforesis")
     print("3. Extraccion de ADN")
@@ -483,13 +485,15 @@ def agregar_stock():
         return
     
     print("Cantidad de stock ingresada")
-    sumar_stock(nombre_grupo, str(pedirInsumoEspecifico), cantidadAgregar) #Se llama a la funcion auxiliar para sumar stock al insumo seleccionado
+    sumar_stock(datos_insumos, nombre_grupo, str(pedirInsumoEspecifico), cantidadAgregar) #Se llama a la funcion auxiliar para sumar stock al insumo seleccionado
+    guardar_datos_insumos(datos_insumos)
 
 
-def sumar_stock(grupo_insumos, id_insumo, stock_a_agregar):
+def sumar_stock(datos_insumos, grupo_insumos, id_insumo, stock_a_agregar):
     """
     Proposito: Suma stock a un insumo especifico dentro del archivo datos_insumos.json.
     Parametros:
+        datos_insumos: diccionario con los datos de los insumos
         grupo_insumos: nombre del grupo en el JSON, por ejemplo "INSUMOS_PCR"
         id_insumo: clave del insumo dentro del grupo, por ejemplo "1"
         stock_a_agregar: cantidad de stock a sumar
@@ -498,8 +502,6 @@ def sumar_stock(grupo_insumos, id_insumo, stock_a_agregar):
     if stock_a_agregar < 0:
         print("No se puede agregar una cantidad negativa de stock.")
         return
-
-    datos_insumos = cargar_datos_insumos()
 
     if grupo_insumos not in datos_insumos:
         print("El grupo de insumos no existe.")
@@ -511,13 +513,16 @@ def sumar_stock(grupo_insumos, id_insumo, stock_a_agregar):
 
     datos_insumos[grupo_insumos][id_insumo]["cantidad"] += stock_a_agregar
 
-    guardar_datos_insumos(datos_insumos)
 
 def agregar_stock_a_grupo():
     """
     Proposito: Permite al usuario sumar stock a un grupo de insumos.
     Obs: Si el usuario selecciona un grupo de insumos, se le va a sumar la misma cantidad a todos los insumos de ese grupo. 
     """ 
+
+    datos_insumos = cargar_datos_insumos()
+
+
     print("1. PCR")
     print("2. Electroforesis")
     print("3. Extraccion de ADN")
@@ -526,24 +531,20 @@ def agregar_stock_a_grupo():
     
     if opcion == 1:
         nombre_grupo = "INSUMOS_PCR"
-        datos_insumos = cargar_datos_insumos()
         insumos = datos_insumos["INSUMOS_PCR"]
     elif opcion==2:
         nombre_grupo = "INSUMOS_ELECTROFORESIS"
-        datos_insumos = cargar_datos_insumos()
         insumos = datos_insumos["INSUMOS_ELECTROFORESIS"]
     elif opcion==3:
         nombre_grupo = "INSUMOS_EXTRACCION_ADN"
-        datos_insumos = cargar_datos_insumos()
         insumos = datos_insumos["INSUMOS_EXTRACCION_ADN"]
 
-    while opcion > 4 or opcion < 0:
-        opcion = pedir_opcion("Seleccione un grupo de insumos: ",1,3)
-    
     agregar = pedir_entero_minimo("Ingrese el numero de stock a sumar al grupo: ", 1) # Se le pide la cantidad de stock a sumar al usuario
 
     for id_insumo in insumos:
-        sumar_stock(nombre_grupo, id_insumo, agregar) # Se llama a la funcion auxiliar para sumar stock a cada insumo del grupo seleccionado
+        sumar_stock(datos_insumos, nombre_grupo, id_insumo, agregar) # Se llama a la funcion auxiliar para sumar stock a cada insumo del grupo seleccionado
+
+    guardar_datos_insumos(datos_insumos)
 
     print("Cantidad de stock ingresada")
 
