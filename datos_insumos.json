@@ -2,14 +2,14 @@
     "INSUMOS_PCR": {
         "1": {
             "nombre": "Primers",
-            "cantidad": 5,
+            "cantidad": 2,
             "unidad": "unidades",
             "stock_minimo": 1,
             "vencimiento": "2026-12-15"
         },
         "2": {
             "nombre": "dNTPs",
-            "cantidad": 5,
+            "cantidad": 3,
             "unidad": "unidades",
             "stock_minimo": 2,
             "vencimiento": "2026-08-20"

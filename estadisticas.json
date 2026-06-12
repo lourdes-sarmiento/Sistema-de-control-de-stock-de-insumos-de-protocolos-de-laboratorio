@@ -1,0 +1,73 @@
+{
+    "TOTALES": {
+        "INSUMOS_PCR": 0,
+        "INSUMOS_ELECTROFORESIS": 5,
+        "INSUMOS_EXTRACCION_ADN": 4
+    },
+    "INSUMOS_PCR": {
+        "1": {
+            "nombre": "Primers",
+            "cantidad_usada": 4
+        },
+        "2": {
+            "nombre": "dNTPs",
+            "cantidad_usada": 0
+        },
+        "3": {
+            "nombre": "ADN Polimerasa",
+            "cantidad_usada": 0
+        },
+        "4": {
+            "nombre": "Cofactor",
+            "cantidad_usada": 0
+        },
+        "5": {
+            "nombre": "Buffer de PCR",
+            "cantidad_usada": 0
+        },
+        "6": {
+            "nombre": "Tubos de PCR",
+            "cantidad_usada": 0
+        }
+    },
+    "INSUMOS_ELECTROFORESIS": {
+        "1": {
+            "nombre": "Gel de agarosa",
+            "cantidad_usada": 5
+        },
+        "2": {
+            "nombre": "Buffer de corrida",
+            "cantidad_usada": 0
+        },
+        "3": {
+            "nombre": "Agente intercalante",
+            "cantidad_usada": 0
+        },
+        "4": {
+            "nombre": "Marcadores de peso mol.",
+            "cantidad_usada": 0
+        }
+    },
+    "INSUMOS_EXTRACCION_ADN": {
+        "1": {
+            "nombre": "Buffer de lisis",
+            "cantidad_usada": 0
+        },
+        "2": {
+            "nombre": "Enzimas",
+            "cantidad_usada": 0
+        },
+        "3": {
+            "nombre": "Agentes de separacion",
+            "cantidad_usada": 0
+        },
+        "4": {
+            "nombre": "Alcholes",
+            "cantidad_usada": 4
+        },
+        "5": {
+            "nombre": "Buffer de elucion",
+            "cantidad_usada": 1
+        }
+    }
+}

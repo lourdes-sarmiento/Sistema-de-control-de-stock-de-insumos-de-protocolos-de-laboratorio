@@ -1,5 +1,5 @@
 import datos
-from funciones_cargapermanente import cargar_datos_insumos, guardar_datos_insumos
+from funciones_cargapermanente import cargar_datos_insumos, guardar_datos_insumos, cargar_estadisticas_insumos, guardar_estadisticas_insumos
 #funciones para mostrar los insumos y procesos basicos de cada protocolo, y para pedir opciones al usuario en los menus
 
 def pedir_opcion(mensaje, minimo, maximo):
@@ -85,8 +85,18 @@ def solicitar_uso_insumo(nombre_grupo, insumos):
         insumo_seleccionado["cantidad"] = stock_restante
 
         datos_insumos = cargar_datos_insumos()
+
+        datos_estadisticas = cargar_estadisticas_insumos()
+
         datos_insumos[nombre_grupo][id_insumo]["cantidad"] = stock_restante
+        
+        datos_estadisticas[nombre_grupo][id_insumo]["cantidad_usada"] += cantidad
+
+        datos_estadisticas["TOTALES"][nombre_grupo] += cantidad
+
         guardar_datos_insumos(datos_insumos)
+
+        guardar_estadisticas_insumos(datos_estadisticas)
 
         print()
         print(f"Insumo seleccionado: {insumo_seleccionado['nombre']}")
@@ -229,7 +239,7 @@ def menu_extraccion_adn():
 def menu():
     '''Muestra el menu principal del programa.'''
     dato = 0
-    while dato != 9:
+    while dato != 10:
         print("***********************************************************************************")
         print("Bienvenido al programa de control de insumos y protocolos de Laboratorios Umbrella")
         print("***********************************************************************************")
@@ -241,11 +251,12 @@ def menu():
         print("6. Mostrar datos de todos los insumos de los protocolos")
         print("7. Consultar datos del personal del laboratorio")
         print("8. Consultar insumos con igual fecha de vencimiento")
-        print("9. Salir del sistema")
+        print("9. Estadisticas")
+        print("10. Salir del sistema")
         print()
 
         try:
-            dato = pedir_opcion("Ingrese opcion de protocolo a realizar o otra opcion requerida: ", 1, 9)
+            dato = pedir_opcion("Ingrese opcion de protocolo a realizar o otra opcion requerida: ", 1, 10)
         except ValueError as e:
             print(e)
             continue
@@ -276,6 +287,9 @@ def menu():
             print("Has seleccionado consultar insumos con igual fecha de vencimiento")
             insumos_vto_iguales()
         elif dato == 9:
+            print("Has seleccionado ver estadisticas")
+            calcular_uso_protocolos()
+        elif dato == 10:
             print("Has seleccionado salir del sistema")
 
 def mostrar_insumos_pcr():
@@ -524,3 +538,42 @@ def insumos_vto_iguales():
     if(opcion == "1"):
         print("Volviendo al menu principal...")
     
+
+
+def calcular_uso_protocolos():
+    """
+    Proposito: Calcula el uso total de cada insumo en cada protocolo y lo muestra en consola.
+    Salida: Imprime en consola el uso total de cada insumo en cada protocolo.
+    """
+    datos_estadisticas = cargar_estadisticas_insumos()
+
+    if not datos_estadisticas:
+        print("No hay registros estadísticos acumulados en el archivo.")
+        return
+
+    totales_protocolos = datos_estadisticas["TOTALES"]
+
+    total_general = sum(totales_protocolos.values())
+
+    print("Estadisticas de uso de insumos por protocolo:")
+    if total_general == 0:
+        print("Aún no se han registrado consumos.")
+        return
+
+    for protocolo, total_usado in totales_protocolos.items():
+        porcentaje = (total_usado / total_general) * 100
+        print(f"Protocolo {protocolo}: {porcentaje:.2f}% (Total unidades utilizadas: {total_usado})")
+    
+    if datos_estadisticas["TOTALES"].get("INSUMOS_PCR", 0):
+        print("El protocolo PCR es el más utilizado.")
+    elif datos_estadisticas["TOTALES"].get("INSUMOS_ELECTROFORESIS", 0):
+        print("El protocolo Electroforesis es el más utilizado.")
+    elif datos_estadisticas["TOTALES"].get("INSUMOS_EXTRACCION_ADN", 0):
+        print("El protocolo Extraccion de ADN es el más utilizado.")
+
+
+    print("1. Volver al menu principal")
+    opcion = input("Seleccione una opcion: ")
+
+    if opcion == "1":
+        print("Volviendo al menu principal...")
