@@ -278,7 +278,7 @@ def menu():
         elif dato == 9:
             print("Has seleccionado salir del sistema")
 
-def mostrar_insumos_pcr():# SE MODIFICOOOOOOOOOOOOOOO
+def mostrar_insumos_pcr():
     """Muestra los insumos necesarios para el protocolo PCR. """
     datos_insumos = cargar_datos_insumos()
     insumos = datos_insumos["INSUMOS_PCR"]
@@ -312,7 +312,7 @@ def mostrar_proceso_basico_pcr():
     print("5. Conservar el producto para su analisis.")
 
 
-def mostrar_insumos_electroforesis():#SE MODIFICOOOOOOOOOOOOOOO
+def mostrar_insumos_electroforesis():
     '''Muestra los insumos necesarios para el protocolo Electroforesis.'''
     datos_insumos = cargar_datos_insumos()
     insumos = datos_insumos["INSUMOS_ELECTROFORESIS"]
@@ -388,7 +388,7 @@ def mostrar_datos():
     mostrar_insumos_electroforesis()
     mostrar_insumos_extraccion_adn()
 
-def agregar_stock():# SE MODIFICOOOOOOOOOOOOO
+def agregar_stock():
     """
     Proposito: Permite al usuario seleccionar un insumo para agregar stock
     Retorna: No retorna nada, pero actualiza la cantidad del insumo seleccionado.
@@ -430,7 +430,7 @@ def agregar_stock():# SE MODIFICOOOOOOOOOOOOO
     sumar_stock(nombre_grupo, str(pedirInsumoEspecifico), cantidadAgregar) #Se llama a la funcion auxiliar para sumar stock al insumo seleccionado
 
 
-def sumar_stock(grupo_insumos, id_insumo, stock_a_agregar):# SE MODIFICOOOOOOOOOOOOOOOOO
+def sumar_stock(grupo_insumos, id_insumo, stock_a_agregar):
     """
     Proposito: Suma stock a un insumo especifico dentro del archivo datos_insumos.json.
     Parametros:
@@ -457,7 +457,7 @@ def sumar_stock(grupo_insumos, id_insumo, stock_a_agregar):# SE MODIFICOOOOOOOOO
 
     guardar_datos_insumos(datos_insumos)
 
-def agregar_stock_a_grupo():#SE MODIFICOOOOOOOOOOOOOOO
+def agregar_stock_a_grupo():
     """
     Proposito: Permite al usuario sumar stock a un grupo de insumos.
     Obs: Si el usuario selecciona un grupo de insumos, se le va a sumar la misma cantidad a todos los insumos de ese grupo. 
