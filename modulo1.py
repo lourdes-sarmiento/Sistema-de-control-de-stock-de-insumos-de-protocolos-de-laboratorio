@@ -1,5 +1,6 @@
 import datos
 from funciones_cargapermanente import cargar_datos_insumos, guardar_datos_insumos, cargar_estadisticas_insumos, guardar_estadisticas_insumos, cargar_datos_personal, guardar_datos_personal, agregar_personal, modificar_personal, eliminar_personal
+import vistas_protocolos
 #funciones para mostrar los insumos y procesos basicos de cada protocolo, y para pedir opciones al usuario en los menus
 
 def pedir_opcion(mensaje, minimo, maximo):
@@ -111,19 +112,6 @@ def solicitar_uso_insumo(nombre_grupo, insumos):
     except IndexError:
         print("Error: el insumo seleccionado no existe.")
 
-def temperatura_protocolo_pcr(): 
-    '''Muestra la temperatura de cada etapa del protocolo PCR utilizando tuplas.'''
-    print()
-    print("Temperaturas del protocolo PCR:")
-    pcr=(
-        ("Desnaturalizacion",94,98),
-        ("Alineamiento",55,60),
-        ("Extension",72,75)
-    )
-    for proceso,temp_min,temp_max in pcr:
-        print(f"{proceso}: entre {temp_min}°C y {temp_max}°C")
-
-
 def menu_pcr():
     '''Muestra el menu del protocolo PCR.'''
     while True:
@@ -145,25 +133,13 @@ def menu_pcr():
             insumos = mostrar_insumos_pcr()
             solicitar_uso_insumo("INSUMOS_PCR", insumos)
         elif opcion == 2:
-            mostrar_proceso_basico_pcr()
+            vistas_protocolos.mostrar_proceso_basico_pcr()
         elif opcion == 3:
-            temperatura_protocolo_pcr()
+            vistas_protocolos.temperatura_protocolo_pcr()
         elif opcion == 4:
             print("Volviendo al menu principal...")
             break
         
-def temperatura_protocolo_electroforesis():
-    """Muestra la temperatura de cada etapa del protocolo Electroforesis utilizando tuplas."""
-    print()
-    print("temperaturas del protocolo Electroforesis:")
-    electroforesis=(
-        ("preparacion del gel",55),
-        ("Corrida del ADN",25),
-        ("Recuperacion del ADN",65)
-    )            
-    for proceso,temperatura in electroforesis:
-        print(f"{proceso}: {temperatura}°C")
-
 
 def menu_electroforesis():
     '''Muestra el menu del protocolo Electroforesis.'''
@@ -186,24 +162,12 @@ def menu_electroforesis():
             insumos = mostrar_insumos_electroforesis()
             solicitar_uso_insumo("INSUMOS_ELECTROFORESIS", insumos)
         elif opcion == 2:
-            mostrar_proceso_basico_electroforesis()
+            vistas_protocolos.mostrar_proceso_basico_electroforesis()
         elif opcion == 3:
-            temperatura_protocolo_electroforesis()
+            vistas_protocolos.temperatura_protocolo_electroforesis()
         elif opcion == 4:
             print("Volviendo al menu principal...")
             break
-
-def temperatura_protocolo_extraccion_adn():
-    '''Muestra la temperatura de cada etapa del protocolo Extraccion de ADN utilizando tuplas.'''
-    print()
-    print("Temperaturas del protocolo Extraccion de ADN:")
-    extraccion_adn=(
-        ("Lisis celular",55,65),
-        ("Precipitacion",0,-20),
-        ("Recuperacion del ADN",-20,-80)
-    )
-    for proceso,temp_min,temp_max in extraccion_adn:
-        print(f"{proceso}: entre {temp_min}°C y {temp_max}°C")
 
 
 def menu_extraccion_adn():
@@ -228,9 +192,9 @@ def menu_extraccion_adn():
             insumos = mostrar_insumos_extraccion_adn()
             solicitar_uso_insumo("INSUMOS_EXTRACCION_ADN", insumos)
         elif opcion == 2:
-            mostrar_proceso_basico_extraccion_adn()
+            vistas_protocolos.mostrar_proceso_basico_extraccion_adn()
         elif opcion == 3:
-            temperatura_protocolo_extraccion_adn()
+            vistas_protocolos.temperatura_protocolo_extraccion_adn()
         elif opcion == 4:
             print("Volviendo al menu principal...")
             break
@@ -357,17 +321,6 @@ def mostrar_insumos_pcr():
     return insumos
 
 
-def mostrar_proceso_basico_pcr():
-    '''Muestra el proceso basico del protocolo PCR.'''
-    print()
-    print("Proceso basico del protocolo PCR:")
-    print("1. Preparar la mezcla de reaccion.")
-    print("2. Colocar los tubos en el termociclador.")
-    print("3. Configurar los ciclos de desnaturalizacion, alineamiento y extension.")
-    print("4. Esperar la finalizacion del proceso.")
-    print("5. Conservar el producto para su analisis.")
-
-
 def mostrar_insumos_electroforesis():
     '''Muestra los insumos necesarios para el protocolo Electroforesis.'''
     datos_insumos = cargar_datos_insumos()
@@ -413,28 +366,6 @@ def mostrar_insumos_extraccion_adn():
         print("\nNo hay insumos con stock menor a 2.")
 
     return insumos
-
-
-def mostrar_proceso_basico_electroforesis():
-    '''Muestra el proceso basico del protocolo Electroforesis.'''
-    print()
-    print("Proceso basico del protocolo Electroforesis:")
-    print("1. Preparar el gel de agarosa.")
-    print("2. Colocar el gel en la camara de corrida.")
-    print("3. Agregar buffer de corrida.")
-    print("4. Cargar las muestras y el marcador.")
-    print("5. Conectar la fuente y realizar la corrida.")
-
-
-def mostrar_proceso_basico_extraccion_adn():
-    '''Muestra el proceso basico del protocolo Extraccion de ADN.'''
-    print()
-    print("Proceso basico del protocolo Extraccion de ADN:")
-    print("1. Colocar la muestra en un tubo.")
-    print("2. Agregar buffer de lisis.")
-    print("3. Incorporar enzimas y agentes de separacion.")
-    print("4. Realizar los lavados con alcohol.")
-    print("5. Recuperar el ADN con buffer de elucion.")
 
 def mostrar_datos():
     """
@@ -607,13 +538,18 @@ def calcular_uso_protocolos():
         porcentaje = (total_usado / total_general) * 100
         print(f"Protocolo {protocolo}: {porcentaje:.2f}% (Total unidades utilizadas: {total_usado})")
     
-    if datos_estadisticas["TOTALES"].get("INSUMOS_PCR", 0):
+    pcr = totales_protocolos.get("INSUMOS_PCR", 0)
+    electro = totales_protocolos.get("INSUMOS_ELECTROFORESIS", 0)
+    adn = totales_protocolos.get("INSUMOS_EXTRACCION_ADN", 0)
+    
+    if pcr > electro and pcr > adn:
         print("El protocolo PCR es el más utilizado.")
-    elif datos_estadisticas["TOTALES"].get("INSUMOS_ELECTROFORESIS", 0):
+    elif electro > pcr and electro > adn:
         print("El protocolo Electroforesis es el más utilizado.")
-    elif datos_estadisticas["TOTALES"].get("INSUMOS_EXTRACCION_ADN", 0):
+    elif adn > pcr and adn > electro:
         print("El protocolo Extraccion de ADN es el más utilizado.")
-
+    else:
+        print("Todos los protocolos tienen el mismo uso")
 
     print("1. Volver al menu principal")
     opcion = input("Seleccione una opcion: ")
