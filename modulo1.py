@@ -138,7 +138,7 @@ def menu_pcr():
             vistas_protocolos.temperatura_protocolo_pcr()
         elif opcion == 4:
             print("Volviendo al menu principal...")
-            break
+            return
         
 
 def menu_electroforesis():
@@ -167,7 +167,7 @@ def menu_electroforesis():
             vistas_protocolos.temperatura_protocolo_electroforesis()
         elif opcion == 4:
             print("Volviendo al menu principal...")
-            break
+            return
 
 
 def menu_extraccion_adn():
@@ -197,7 +197,7 @@ def menu_extraccion_adn():
             vistas_protocolos.temperatura_protocolo_extraccion_adn()
         elif opcion == 4:
             print("Volviendo al menu principal...")
-            break
+            return
 
 def menu_personal():
     """Muestra el menu de gestion del personal del laboratorio."""
@@ -241,7 +241,7 @@ def menu_personal():
                 print("Personal eliminado con exito.")
         elif opcion == 5:
             print("Volviendo al menu principal...")
-            break
+            return
 
 def menu():
     '''Muestra el menu principal del programa.'''
