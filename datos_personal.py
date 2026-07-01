@@ -1,10 +1,5 @@
 # datos de los trabajadores del laboratorio
- 
 import re
-from modulo1 import pedir_opcion
- 
-import re
-
 from funciones_cargapermanente import cargar_datos_personal
 from modulo1 import pedir_opcion
 

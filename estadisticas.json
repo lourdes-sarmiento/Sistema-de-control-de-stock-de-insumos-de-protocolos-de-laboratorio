@@ -2,7 +2,7 @@
     "TOTALES": {
         "INSUMOS_PCR": 0,
         "INSUMOS_ELECTROFORESIS": 5,
-        "INSUMOS_EXTRACCION_ADN": 4
+        "INSUMOS_EXTRACCION_ADN": 8
     },
     "INSUMOS_PCR": {
         "1": {
@@ -63,7 +63,7 @@
         },
         "4": {
             "nombre": "Alcholes",
-            "cantidad_usada": 4
+            "cantidad_usada": 8
         },
         "5": {
             "nombre": "Buffer de elucion",

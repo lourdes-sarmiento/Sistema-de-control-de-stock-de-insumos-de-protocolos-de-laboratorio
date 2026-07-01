@@ -97,7 +97,7 @@
         },
         "4": {
             "nombre": "Alcoholes",
-            "cantidad": 5,
+            "cantidad": 1,
             "unidad": "frascos",
             "stock_minimo": 2,
             "vencimiento": "2027-12-31"

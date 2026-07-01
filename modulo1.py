@@ -105,7 +105,9 @@ def solicitar_uso_insumo(nombre_grupo, insumos):
         print(f"Cantidad a utilizar: {cantidad} {insumo_seleccionado['unidad']}")
         print(f"Stock restante: {stock_restante} {insumo_seleccionado['unidad']}")
 
-        alertar_stock_bajo(insumos)
+        alertas=alertar_stock_bajo(insumos)
+        for alerta in alertas:
+            print(alerta)
 
     except ValueError:
         print("Error: debe ingresar un numero valido numerico.")
