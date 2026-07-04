@@ -488,31 +488,40 @@ def insumos_vto_iguales():
     Proposito: Devuelve una lista de insumos con la misma fecha de vencimiento. 
     """
 
-    pcr_vto = datos.fechas_de_vencimiento_pcr()
-    adn_vto = datos.fechas_de_vencimiento_adn()
-    electro_vto = datos.fechas_de_vencimiento_electrofosis()
+    datos_actuales = cargar_datos_insumos()
+    
+    if not datos_actuales:
+        print("No se encontraron datos para procesar.")
+        return
+
+    pcr_vto = datos.fechas_de_vencimiento_pcr(datos_actuales)
+    adn_vto = datos.fechas_de_vencimiento_adn(datos_actuales)
+    electro_vto = datos.fechas_de_vencimiento_electrofosis(datos_actuales)
 
     comunes = pcr_vto & adn_vto & electro_vto
       
-    for fecha in comunes:
-        anio,mes,dia=fecha.split("-")
-        fecha_prolija=(f"{dia}/{mes}/{anio}")
-        
-        insumos = (datos.buscar_insumos_por_fecha(fecha))
-        print(f"\nInsumos con Fecha de vencimiento en comun: {fecha_prolija}")
-        print("--------------------------------------------")
-        print("                Insumos:                   ")
-        print("--------------------------------------------")
-        for insumos in insumos: 
-            print(f"|  - {insumos:<35}|")
-        print("--------------------------------------------")
-        
+    if not comunes:
+        print("No hay insumos con fecha de vencimiento en comun entre los protocolos.")
+    else:
+        for fecha in comunes:
+            anio, mes, dia = fecha.split("-")
+            fecha_prolija = f"{dia}/{mes}/{anio}"
+            
+            insumos = datos.buscar_insumos_por_fecha(datos_actuales, fecha)
+            print(f"\nInsumos con Fecha de vencimiento en comun: {fecha_prolija}")
+            print("--------------------------------------------")
+            print("                Insumos:                   ")
+            print("--------------------------------------------")
+            for insumo in insumos: 
+                print(f"|  - {insumo:<35}|")
+            print("--------------------------------------------")
+            
     print("1. Volver al menu principal")
-
     opcion = input("Seleccione una opcion: ")
 
-    if(opcion == "1"):
+    if opcion == "1":
         print("Volviendo al menu principal...")
+        return
     
 
 
@@ -558,3 +567,4 @@ def calcular_uso_protocolos():
 
     if opcion == "1":
         print("Volviendo al menu principal...")
+        return

@@ -40,7 +40,12 @@ def crear_cuenta():
     while True:
         contraseña = input("Ingrese una contraseña (debe terminar con al menos 2 números): ")
 
+        if usuario in datos.usuarios:
+            print(f"Error: El usuario '{usuario}' ya está registrado. Intente con otro.")
+            return
+
         if re.match(r".*\d{2,}$", contraseña):
+            datos.usuarios[usuario] = contraseña
             datos.lista_usuarios.append(usuario)
             datos.lista_contraseñas.append(contraseña)
             print("Cuenta creada con éxito")
@@ -53,7 +58,7 @@ def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contra
     
     """ Esta función sirve para verificar si el usuario y la contraseña ingresados son correctos se utliza"""
     """ Se utliza una búsqueda con expresiones regulares para comparar el usuario ingresado con la lista de usuarios, y se verifica que la contraseña coincida con la contraseña correspondiente al usuario encontrado"""
-    """ Se utiliza tercer parametro re.IGNORECASE para hacer la búsqueda de usuarios sin importar mayúsculas o minúsculas, y se limita el número de intentos de acceso a 3 para evitar intentos de acceso no autorizados"""
+    """ Se utiliza tercer parametro re.IGNORECASE para hacer la búsqueda de usuarios sin importar mayúsculas o minúsculas"""
     indice = 0
     while indice <len(lista_usuarios):
         if re.search(f"^{usuario_ingresado}$", lista_usuarios[indice], re.IGNORECASE) and lista_contraseñas[indice] == contraseña_ingresada:
