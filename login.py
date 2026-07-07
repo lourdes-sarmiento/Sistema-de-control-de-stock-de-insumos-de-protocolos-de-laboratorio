@@ -44,14 +44,15 @@ def crear_cuenta():
             print(f"Error: El usuario '{usuario}' ya está registrado. Intente con otro.")
             return
 
-        if re.match(r".*\d{2,}$", contraseña):
+        if re.match(r".*\d{2,}$", contraseña) and len(usuario) > 0:
             datos.usuarios[usuario] = contraseña
             datos.lista_usuarios.append(usuario)
             datos.lista_contraseñas.append(contraseña)
             print("Cuenta creada con éxito")
             return
         else:
-            print("Error: la contraseña debe terminar con al menos 2 números")
+            print("Error: la contraseña debe terminar con al menos 2 números o el campo usuario no fue llenado.")
+            return
 
 
 def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contraseñas) :
@@ -66,27 +67,22 @@ def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contra
         indice = indice + 1
     return False
 
-def ingresar():
-    
+def ingresar(conteo_errores=0):
     """ Esta función sirve para manejar el proceso de inicio de sesión, verificando el usuario y la contraseña, y limitando los intentos de acceso"""
     
-    conteo_errores = 0
-    acceso = False
-    while acceso == False:
-        usuario_ingresado = input ("Ingrese su nombre de usuario: ")
-        contraseña_ingresada = input ("Ingrese su contraseña: ")
-        if login (usuario_ingresado, contraseña_ingresada, datos.lista_usuarios, datos.lista_contraseñas):
-            acceso = True
-            menu()
+    if conteo_errores >= 3:
+        print("Ha intentado entrar demasiadas veces.")
+        print("SALIENDO DEL SISTEMA...")
+        exit()
 
-        else:
-            conteo_errores +=1
-            print ("usuario o contraseña incorrectos, intente nuevamente")
-            
-            if conteo_errores >= 3:
-                print("ha intentado entrar demasiadas veces")
-                print("SALIENDO DEL SISTEMA...")
-                return
+    usuario_ingresado = input("Ingrese su nombre de usuario: ")
+    contraseña_ingresada = input("Ingrese su contraseña: ")
+    
+    if login(usuario_ingresado, contraseña_ingresada, datos.lista_usuarios, datos.lista_contraseñas):
+        menu()
+    else:
+        print("Usuario o contraseña incorrectos, intente nuevamente.")
+        ingresar(conteo_errores + 1)
 
 def main():
     menu_entrada()
