@@ -55,17 +55,18 @@ def crear_cuenta():
             return
 
 
-def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contraseñas) :
-    
+def login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contraseñas, indice=0):
     """ Esta función sirve para verificar si el usuario y la contraseña ingresados son correctos se utliza"""
     """ Se utliza una búsqueda con expresiones regulares para comparar el usuario ingresado con la lista de usuarios, y se verifica que la contraseña coincida con la contraseña correspondiente al usuario encontrado"""
     """ Se utiliza tercer parametro re.IGNORECASE para hacer la búsqueda de usuarios sin importar mayúsculas o minúsculas"""
-    indice = 0
-    while indice <len(lista_usuarios):
-        if re.search(f"^{usuario_ingresado}$", lista_usuarios[indice], re.IGNORECASE) and lista_contraseñas[indice] == contraseña_ingresada:
-            return True
-        indice = indice + 1
-    return False
+    """ Se utiliza recursión para recorrer la lista de usuarios y contraseñas hasta encontrar una coincidencia o llegar al final de la lista"""
+    if indice >= len(lista_usuarios):
+        return False
+
+    if re.search(f"^{usuario_ingresado}$", lista_usuarios[indice], re.IGNORECASE) and lista_contraseñas[indice] == contraseña_ingresada:
+        return True
+
+    return login(usuario_ingresado, contraseña_ingresada, lista_usuarios, lista_contraseñas, indice + 1)
 
 def ingresar(conteo_errores=0):
     """ Esta función sirve para manejar el proceso de inicio de sesión, verificando el usuario y la contraseña, y limitando los intentos de acceso"""
