@@ -110,6 +110,6 @@ def contar_personal():
 
 def conteo_personal(claves, indice):
     """ Realiza el conteo recursivo del personal."""
-    if indice >= len(claves):
+    if indice >= len(claves): # Caso base
         return 0
-    return 1 + conteo_personal(claves, indice + 1)
+    return 1 + conteo_personal(claves, indice + 1) #Llamada recursiva

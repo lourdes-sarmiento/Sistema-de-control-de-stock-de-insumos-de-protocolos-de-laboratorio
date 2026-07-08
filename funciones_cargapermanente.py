@@ -84,11 +84,11 @@ def agregar_personal(datos_nuevo):
             return False
 
     numero_nuevo = len(datos_personal) + 1
-    clave_nueva = f"datos{numero_nuevo}"
+    clave_nueva = f"persona{numero_nuevo}"
 
     while clave_nueva in datos_personal:
         numero_nuevo += 1
-        clave_nueva = f"datos{numero_nuevo}"
+        clave_nueva = f"persona{numero_nuevo}"
 
     datos_personal[clave_nueva] = {
         "Nombre": datos_nuevo["Nombre"],
