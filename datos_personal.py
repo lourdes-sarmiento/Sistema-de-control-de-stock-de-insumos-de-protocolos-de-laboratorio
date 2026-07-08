@@ -97,3 +97,19 @@ def consultar_dato():
                 print(f"El {dato_elegido} de {persona['Nombre']} es: {resultado[0]}")
             else:
                 print(f"No se encontro el {dato_elegido} de {persona['Nombre']}")
+
+def contar_personal():
+    """Carga los datos del json para arrancar el proceso de contar la cantidad de personal cargado en el JSON."""
+    datos_personal = cargar_datos_personal()
+    
+    claves = list(datos_personal.keys())
+
+    cantidad_personal = conteo_personal(claves, 0)
+    
+    print(f"\nCantidad de personal cargado: {cantidad_personal}")
+
+def conteo_personal(claves, indice):
+    """ Realiza el conteo recursivo del personal."""
+    if indice >= len(claves):
+        return 0
+    return 1 + conteo_personal(claves, indice + 1)

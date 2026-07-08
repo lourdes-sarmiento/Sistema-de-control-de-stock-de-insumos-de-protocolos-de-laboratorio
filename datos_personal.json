@@ -1,5 +1,5 @@
 {
-    "datos1": {
+    "persona1": {
         "Nombre": "Carlos Perez",
         "Telefono": "1234-5678",
         "Direccion": "calle libertad 123",
@@ -8,7 +8,7 @@
         "Estado Civil": "Casado",
         "Edad": "30 años"
     },
-    "datos2": {
+    "persona2": {
         "Nombre": "Javier Gomez",
         "Telefono": "9876-5432",
         "Direccion": "calle libertad 456",
@@ -17,7 +17,7 @@
         "Estado Civil": "Casado",
         "Edad": "30 años"
     },
-    "datos3": {
+    "persona3": {
         "Nombre": "Josefina Rodriguez",
         "Telefono": "2343-2343",
         "Direccion": "calle peru 234",
@@ -25,5 +25,14 @@
         "Obra Social": "OSDE",
         "Estado Civil": "soltera",
         "Edad": "24 anios"
+    },
+    "datos4": {
+        "Nombre": "Juanceto07",
+        "Telefono": "112854954",
+        "Direccion": "Suipacha 616",
+        "Correo": "suipacha@gmail.com",
+        "Obra Social": "OSDE",
+        "Estado Civil": "Soltero",
+        "Edad": "43"
     }
 }

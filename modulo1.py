@@ -211,10 +211,11 @@ def menu_personal():
         print("2. Agregar personal")
         print("3. Modificar personal")
         print("4. Eliminar personal")
-        print("5. Volver al menu principal")
+        print("5. Contar personal")
+        print("6. Volver al menu principal")
 
         try:
-            opcion = pedir_opcion("Seleccione una opcion: ", 1, 5)
+            opcion = pedir_opcion("Seleccione una opcion: ", 1, 6)
         except ValueError as e:
             print(e)
             continue
@@ -242,6 +243,9 @@ def menu_personal():
             if eliminar_personal(nombre_persona):
                 print("Personal eliminado con exito.")
         elif opcion == 5:
+            import datos_personal
+            datos_personal.contar_personal()
+        elif opcion == 6:
             print("Volviendo al menu principal...")
             return
 
